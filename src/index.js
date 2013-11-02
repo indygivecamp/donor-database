@@ -1,6 +1,31 @@
 var DD = DD || {};
 
+// ADMIN PAGE
+$(document).on( 'pagebeforeshow', 'div#admin', function( e, data ) {
 
+	var page = $(e.currentTarget)
+		, path = page.data('path')
+		, id = '#' + page.attr('id')
+		, content = $('#admin-page-content').html()
+	;
+
+	// GRAB DD.Lov and chunk into list items
+	var results = '';
+	$.each( DD.lov, function( index, item ) {
+		var id = index.toLowerCase().replace( / /g, '' )
+		
+		results += '<li><a href="#' + id + '" data-id="' + id + '">' + index + '</a></li>';
+		// CREATE NEW PAGE FOR THEM AS WELL
+		$( '<div data-role="page" data-type="admin" id="' + id + '" data-title="' + index + '"></div>' )
+			.appendTo( $.mobile.pageContainer ).html( content )
+			.find( 'h1' ).html( index ).end()
+			.find( 'input' ).attr( 'placeholder', index ).end()
+		;
+	});
+	$( 'ul', page ).html( results ).listview( 'refresh' );
+});
+
+// INDIVIDUAL ADMIN PAGES
 $(document).on( 'pagebeforeshow', 'div[data-role="page"][data-type="admin"]', function( e, data ) {
 
 	var page = $(e.currentTarget)
@@ -26,7 +51,15 @@ $(document).on( 'pagebeforeshow', 'div[data-role="page"][data-type="admin"]', fu
 	});
 
 	// LOAD DATA
-	DD.getListItems( path, jqList );
+	DD.promises.lov.done(
+		function( data ) {
+			var results = '';
+			$.each( data[title], function( key, value ) {
+				results += '<li>' + value.displayName + '</li>';
+			});
+			jqList.html( results ).listview( 'refresh' );
+		}
+	);
 });
 
 

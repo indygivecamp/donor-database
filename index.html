@@ -22,36 +22,39 @@
         <p>I'm first in the source order so I'm shown as the page.</p>
         <p>View internal page called <a href="#fundraisers">fundraisers</a></p>
         <a href="/views/person.html" data-prefetch="true">This link will prefetch the person page</a>
+        <p>
+            <!--<a href="/views/admin.html" data-prefetch="true">Admin</a>-->
+            <a href="#admin">Admin</a>
+        </p><!-- /page -->
     </div><!-- /content -->
-
-    <div data-role="footer">
-        <h4>Page Footer</h4>
-    </div><!-- /footer -->
 </div><!-- /page -->
 
-<!-- Start of second page -->
-<div data-role="page" id="fundraisers" data-type="admin" data-path="fundraisers" data-title="Fundraisers"></div><!-- /page -->
 
-<!-- Start of second page -->
-<div data-role="page" id="contactchannels" data-type="admin" data-url="contactchannels" data-title="Contact Channels"></div><!-- /page -->
+<div data-role="page" id="admin">
+    <div data-role="header" data-theme="e">
+        <h1>Admin</h1>
+    </div>
 
-<!-- Start of second page -->
-<div data-role="page" id="genders" data-type="admin" data-path="genders" data-title="Genders"></div><!-- /page -->
+    <div data-role="content">
+        <ul data-role="listview" data-inset="true" ></ul>
+    </div>
 
-<!-- TEMPLATE -->
-<script type="text/template" id="admin-page-content">
-    <div data-role="header">
-        <h1></h1>
-    </div><!-- /header -->
+    <!-- TEMPLATE FOR SUBPAGES-->
+    <script type="text/template" id="admin-page-content">
+        <div data-role="header">
+            <h1></h1>
+        </div><!-- /header -->
 
-    <div class="form" data-role="content">
-        <div class="inline">
-            <input type="text" name="new" placeholder="" value="" data-clear-btn="true">
-            <a href="#" data-role="button" data-inline="true">Add New</a>
-        </div>
-        <ul data-role="listview" data-inset="true">
-        </ul>
-    </div><!-- /content -->
-</script>
+        <div class="form" data-role="content">
+            <div class="inline">
+                <input type="text" name="new" placeholder="" value="" data-clear-btn="true">
+                <a href="#" data-role="button" data-inline="true">Add New</a>
+            </div>
+            <ul data-role="listview" data-inset="true">
+            </ul>
+        </div><!-- /content -->
+    </script>
+</div>
+
 </body>
 </html>
