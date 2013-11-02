@@ -41,6 +41,26 @@ $.subscribe("api/init", function () {
 
 });
 
+$.subscribe("app/registerPromise", function (_, name, promise) {
+
+    DD.promises = DD.promises || {};
+
+    DD.promises[name] = promise;
+
+});
+
+$.subscribe("app/loading", function (_, promise) {
+
+
+});
+
+$.subscribe("app/error", function (_, error) {
+
+    //TODO make this pretty
+    alert(error);
+
+});
+
 $.subscribe("lov/flush", function () {
 
     DD.lov = {};
@@ -49,39 +69,52 @@ $.subscribe("lov/flush", function () {
 
 $.subscribe("lov/update", function () {
 
-    $.getJSON(DD.api.lovtype)
-        .done(function (types) {
+    var promise = $.getJSON(DD.api.lovtype),
+        deferred = $.Deferred();
 
-            $.each(types, function (i, type) {
+    $.publish("app/registerPromise", ["lov", deferred.promise()]);
 
-                DD.lov[type.LOVName] = type.LOVs.map(function (lov) {
+    $.publish("app/loading", [promise]);
 
-                    if (lov.Active) {
+    promise.done(function (types) {
 
-                        return {
-                            displayName: lov.Name,
-                            id: lov.LOVID,
-                            ordinal: lov.DisplayOrder
-                        };
+        $.each(types, function (i, type) {
 
-                    }
+            DD.lov[type.LOVName] = type.LOVs.map(function (lov) {
 
-                });
+                if (lov.Active) {
 
-                DD.lov[type.LOVName].sort(function (a, b) {
+                    return {
+                        displayName: lov.Name,
+                        id: lov.LOVID,
+                        ordinal: lov.DisplayOrder
+                    };
 
-                    return a.ordinal - b.ordinal;
-
-                });
+                }
 
             });
 
-        })
-        .fail()
+            DD.lov[type.LOVName].sort(function (a, b) {
+
+                return a.ordinal - b.ordinal;
+
+            });
+
+        });
+
+        deferred.resolveWith(this, [DD.lov]);
+
+    });
+
+    promise.fail(function (e) {
+
+        $.publish("app/error", [e]);
+
+    });
 
 });
 
-$.subscribe("init", function () {
+$.subscribe("app/init", function () {
 
     $.publish("api/init");
 
@@ -91,4 +124,4 @@ $.subscribe("init", function () {
 
 });
 
-$.publish("init");
+$.publish("app/init");
