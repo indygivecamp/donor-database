@@ -1,5 +1,11 @@
 var DD = DD || {};
 
+DD.sortByOrdinal = function (a, b) {
+
+    return a.ordinal - b.ordinal;
+
+};
+
 (function($) {
 
     var o = $({});
@@ -78,31 +84,47 @@ $.subscribe("app/registerPromise", function (_, name, promise) {
 
 });
 
-$.subscribe("app/error", function (_, error) {
-
+$.subscribe("app/error", function (event, promise, type, message) {
+    console.log(arguments);
     //TODO make this pretty
-    alert(error);
+
 
 });
 
 $.subscribe("lov/flush", function () {
 
-    DD.lov = {};
+    DD.lov = {
+        admin: {}
+    };
 
 });
 
 $.subscribe("lov/update", function () {
 
     var promise = $.getJSON(DD.api.lovtype),
-        deferred = $.Deferred();
+        deferred = $.Deferred(),
+        adminDeferred = $.Deferred();
 
     $.publish("app/registerPromise", ["lov", deferred.promise()]);
+    $.publish("app/registerPromise", ["admin_lov", adminDeferred.promise()]);
 
     promise.done(function (types) {
 
         $.each(types, function (i, type) {
 
-            DD.lov[type.LOVName] = type.LOVs.map(function (lov) {
+            var name = type.LOVName;
+
+            DD.lov.admin[name] = type.LOVs.map(function (lov) {
+
+                return {
+                    displayName: lov.Name,
+                    id: lov.LOVID,
+                    ordinal: lov.DisplayOrder
+                };
+
+            });
+
+            DD.lov[name] = type.LOVs.map(function (lov) {
 
                 if (lov.Active) {
 
@@ -116,21 +138,18 @@ $.subscribe("lov/update", function () {
 
             });
 
-            DD.lov[type.LOVName].sort(function (a, b) {
-
-                return a.ordinal - b.ordinal;
-
-            });
+            DD.lov[name].sort(DD.sortByOrdinal);
 
         });
 
         deferred.resolveWith(this, [DD.lov]);
+        adminDeferred.resolveWith(this, [DD.lov.admin]);
 
     });
 
-    promise.fail(function (e) {
+    promise.fail(function () {
 
-        $.publish("app/error", [e]);
+        $.publish("app/error", arguments);
 
     });
 
