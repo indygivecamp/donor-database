@@ -28,27 +28,29 @@
 </div><!-- /page -->
 
 <!-- Start of second page -->
-<div data-role="page" id="fundraisers">
+<div data-role="page" id="fundraisers" data-type="admin" data-path="fundraisers" data-title="Fundraisers"></div><!-- /page -->
 
+<!-- Start of second page -->
+<div data-role="page" id="contactchannels" data-type="admin" data-url="contactchannels" data-title="Contact Channels"></div><!-- /page -->
+
+<!-- Start of second page -->
+<div data-role="page" id="genders" data-type="admin" data-path="genders" data-title="Genders"></div><!-- /page -->
+
+
+<!-- TEMPLATE -->
+<script type="text/template" id="admin-page-content">
     <div data-role="header">
-        <h1>Fundraisers</h1>
+        <h1></h1>
     </div><!-- /header -->
 
     <div class="form" data-role="content">
-        <label for="textinput-s">Fundraisers:</label>
         <div class="inline">
-            <input type="text" name="new" id="fundraiser" placeholder="Fundraiser" value="" data-clear-btn="true">
+            <input type="text" name="new" placeholder="" value="" data-clear-btn="true">
             <a href="#" data-role="button" data-inline="true">Add New</a>
         </div>
         <ul data-role="listview" data-inset="true">
         </ul>
-        <p><a href="#foo">Back to foo</a></p>
     </div><!-- /content -->
-
-    <!--<div data-role="footer">
-        <h4>FOOTER</h4>
-    </div>--><!-- /footer -->
-</div><!-- /page -->
-
+</script>
 </body>
 </html>
