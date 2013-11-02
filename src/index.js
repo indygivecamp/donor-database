@@ -42,26 +42,30 @@ $(document).on( 'pagebeforeshow', 'div[data-role="page"][data-type="admin"]', fu
 
 	var jqList = $('ul', id);
 
-	// HANDLE ADD NEW FUNDRAISER CLICK
-	$( id ).off().on( 'click', 'a', function(e) {
+	// HANDLE ADD NEW ITEM CLICK
+	$( id, page ).off().on( 'click', 'a', function(e) {
 		var val = $('input', id).val();
 		if( !!val ) {
 			DD.saveNewListItem( path, { name: val }, jqList );
 		}
 	});
+	$( id, page ).off().on( 'click', 'a', function(e) {
+		// SET ACTIVE/INACTIVE
 
-	// LOAD DATA
+	});
+
+	// LOAD LOV DATA FOR THIS SUBPAGE
 	DD.promises.lov.done(
 		function( data ) {
 			var results = '';
 			$.each( data[title], function( key, value ) {
-				results += '<li>' + value.displayName + '</li>';
+				results += '<li data-role="fieldcontain"><label>' + value.displayName + '</label><select name="toggle' + key + '" id="toggle' + key + '" data-role="slider"><option value="off">Hide</option><option value="on">Show</option></select></li>';
 			});
 			jqList.html( results ).listview( 'refresh' );
+			$( 'select', jqList ).slider();
 		}
 	);
 });
-
 
 // LOAD JSON DATA (ID/NAME) AS LIST ITEMS FROM PATH
 DD.getListItems = function( path, jqList ) {
