@@ -19,22 +19,170 @@
 
     <div data-role="content">
         <form>
+
+            <!-- person type -->
+
+            <div data-role="fieldcontain">
+                <label for="person-title">Relationship:</label>
+                <select name="person-type" id="person-type">
+                </select>
+            </div>
+
+            <!-- title -->
+
+            <div data-role="fieldcontain">
+                <label for="person-title">Title:</label>
+                <input type="text" data-clear-btn="true" name="person-title" id="person-title" value="">
+            </div>
+
+            <!-- first name -->
+
             <div data-role="fieldcontain">
                 <label for="person-first-name">First Name:</label>
                 <input type="text" data-clear-btn="true" name="person-first-name" id="person-first-name" value="">
             </div>
+
+            <!-- last name -->
+
             <div data-role="fieldcontain">
                 <label for="person-last-name">Last Name:</label>
                 <input type="text" data-clear-btn="true" name="person-last-name" id="person-last-name" value="">
             </div>
+
+            <!-- suffix -->
+
             <div data-role="fieldcontain">
-                <label for="person-email">Email:</label>
-                <input type="email" data-clear-btn="true" name="person-email" id="person-email" value="">
+                <label for="person-suffix">Suffix:</label>
+                <input type="text" data-clear-btn="true" name="person-suffix" id="person-suffix" value="">
             </div>
+
+            <!-- org name -->
+
+            <div data-role="fieldcontain">
+                <label for="person-org-name">Org Name:</label>
+                <input type="text" data-clear-btn="true" name="person-org-name" id="person-org-name" value="">
+            </div>
+
+            <!-- gender -->
+
+            <div data-role="fieldcontain">
+                <label for="person-gender">Gender:</label>
+                <select name="person-gender" id="person-gender">
+                </select>
+            </div>
+
+            <!-- family info -->
+
             <div data-role="fieldcontain">
                 <label for="person-notes">Notes:</label>
                 <textarea cols="40" rows="8" name="person-notes" id="person-notes"></textarea>
             </div>
+
+            <!-- ADDRESS -->
+
+            <div data-role="collapsible-set" data-theme="b" data-content-theme="d">
+                <div data-role="collapsible">
+                    <h2>Address</h2>
+
+                <!-- address1 -->
+
+                    <div data-role="fieldcontain">
+                        <label for="person-address1">Address 1:</label>
+                        <input type="text" data-clear-btn="true" name="person-address1" id="person-address1" value="">
+                    </div>
+
+                <!-- address2 -->
+
+                    <div data-role="fieldcontain">
+                        <label for="person-address2">Address 2:</label>
+                        <input type="text" data-clear-btn="true" name="person-address2" id="person-address2" value="">
+                    </div>
+
+                <!-- city -->
+
+                    <div data-role="fieldcontain">
+                        <label for="person-city">City:</label>
+                        <input type="text" data-clear-btn="true" name="person-city" id="person-city" value="">
+                    </div>
+
+                <!-- state -->
+
+                    <div data-role="fieldcontain">
+                        <label for="person-state">State:</label>
+                        <input type="text" data-clear-btn="true" name="person-state" id="person-state" value="">
+                    </div>
+
+                <!-- zip -->
+
+                    <div data-role="fieldcontain">
+                        <label for="person-zip">Zip:</label>
+                        <input type="text" data-clear-btn="true" name="person-zip" id="person-zip" value="">
+                    </div>
+
+                <!-- county -->
+
+                    <div data-role="fieldcontain">
+                        <label for="person-county">County:</label>
+                        <input type="text" data-clear-btn="true" name="person-county" id="person-county" value="">
+                    </div>
+
+                </div>
+
+            <!-- INTEREST -->
+                <div data-role="collapsible">
+                    <h2>Interest</h2>
+
+                </div>
+
+            <!-- CONTACT INFO -->
+
+                <div data-role="collapsible">
+                    <h2>Contact Info</h2>
+
+                    <!-- email address -->
+
+                    <div data-role="fieldcontain">
+                        <label for="person-email">Email:</label>
+                        <input type="email" data-clear-btn="true" name="person-email" id="person-email" value="">
+                    </div>
+
+                <!-- phone1 -->
+
+                    <div data-role="fieldcontain">
+                        <label for="person-phone1">Home Phone:</label>
+                        <input type="tel" data-clear-btn="true" name="person-phone1" id="person-phone1" value="">
+                    </div>
+
+                <!-- phone2 -->
+
+                    <div data-role="fieldcontain">
+                        <label for="person-phone2">Work Phone:</label>
+                        <input type="tel" data-clear-btn="true" name="person-phone2" id="person-phone2" value="">
+                    </div>
+
+                <!-- phone3 -->
+
+                    <div data-role="fieldcontain">
+                        <label for="person-phone3">Cell Phone:</label>
+                        <input type="tel" data-clear-btn="true" name="person-phone3" id="person-phone3" value="">
+                    </div>
+
+                <!-- contact preference -->
+
+                </div>
+
+            <!-- CONTACT -->
+
+                <div data-role="collapsible">
+                    <h2>Contact Activity</h2>
+                </div>
+            <!-- DONATION -->
+                <div data-role="collapsible">
+                    <h2>Donation Activity</h2>
+                </div>
+            </div>
+
+
         </form>
     </div>
 </div>
