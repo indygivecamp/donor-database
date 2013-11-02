@@ -1,4 +1,4 @@
-var DD = {};
+var DD = DD || {};
 
 
 $(document).on( 'pagebeforeshow', 'div[data-role="page"][data-type="admin"]', function( e, data ) {

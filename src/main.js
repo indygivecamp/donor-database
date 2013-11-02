@@ -1,26 +1,90 @@
-(function (global, a, f) {
+var DD = DD || {};
 
-    var list = ["map", "filter", "some", "every", "reduce", "reduceRight", "sort"];
+(function($) {
 
-    function flip(fn) {
+    var o = $({});
 
-        return function (that, arg) {
+    $.subscribe = function() {
+        o.on.apply(o, arguments);
+    };
 
-            return arguments.length > 1 ? fn.call( that, this, arg ) : fn.call( that, this );
+    $.unsubscribe = function() {
+        o.off.apply(o, arguments);
+    };
 
-        };
+    $.publish = function() {
+        o.trigger.apply(o, arguments);
+    };
+
+}(jQuery));
+
+$.subscribe("api/init", function () {
+
+    var host = "http://lebanonboysgirlsclub.org.mytempweb.com/api/";
+
+    var resources = [
+        ["lov",         "LOV"       ],
+        ["lovtype",     "LOVType"   ],
+        ["person",      "Person"    ],
+        ["donation",    "Donation"  ],
+        ["interest",    "Interest"  ],
+        ["contact",     "contact"   ],
+        ["todo",        "Todo"      ]
+    ];
+
+    DD.api = {};
+
+    $.each(resources, function (i, tuple) {
+        DD.api[tuple[0]] = host + tuple[1];
+    });
+
+});
+
+$.subscribe("lov/flush", function () {
+
+    DD.lov = {};
+
+});
+
+$.subscribe("lov/update", function () {
+
+    function addTypes(types) {
 
     }
 
-    function createGlobals(fName) {
+    function addRecord(record) {
 
-        global[fName] = f.bind.bind( flip( a[fName] ) );
-        global[fName + "To"] = f.bind.bind( a[fName] );
     }
 
-    global.each = f.bind.bind( flip( a.forEach ) );
-    global.eachTo = f.bind.bind( a.forEach );
+    function addRecords(records) {
 
-    eachTo( list )( createGlobals );
+    }
 
-}( this, Array.prototype, Function.prototype ));
+
+
+    $.getJSON(DD.api.lovtype)
+        .done(function (types) {
+
+            applyTypes(types);
+
+            $.getJSON(DD.api.lov)
+                .done(addRecords)
+                .fail();
+        })
+        .fail()
+
+
+
+});
+
+$.subscribe("init", function () {
+
+    $.publish("api/init");
+
+    $.publish("lov/flush");
+
+    $.publish("lov/udpate");
+
+});
+
+$.publish("init");
