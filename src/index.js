@@ -40,55 +40,56 @@ $(document).on( 'pagebeforeshow', 'div[data-role="page"][data-type="admin"]', fu
 	page.find( 'input' ).attr( 'placeholder', title );
 	page.trigger( 'pagecreate' );
 
-	var jqList = $('ul', id);
+	var jqList = $('fieldset', id);
 
 	// HANDLE ADD NEW ITEM CLICK
-	$( id, page ).off().on( 'click', 'a', function(e) {
-		var val = $('input', id).val();
-		if( !!val ) {
-			DD.saveNewListItem( path, { name: val }, jqList );
-		}
-	});
-	$( id, page ).off().on( 'click', 'a', function(e) {
-		// SET ACTIVE/INACTIVE
-
-	});
+//	$( id, page ).off().on( 'click', 'a', function(e) {
+//		var val = $('input', id).val();
+//		if( !!val ) {
+//			DD.saveNewListItem( path, { name: val }, jqList );
+//		}
+//	});
+//	$( id, page ).off().on( 'click', 'a', function(e) {
+//		// SET ACTIVE/INACTIVE
+//
+//	});
 
 	// LOAD LOV DATA FOR THIS SUBPAGE
 	DD.promises.admin_lov.done(
 		function( data ) {
 			var results = '';
 			$.each( data[title], function( key, value ) {
-                var icon = value.active ? "minus" : "plus",
-                    theme = value.active ? "b" : "c";
-				results += '<li data-theme="' + theme;
-                results += '" data-icon="' + icon + '">';
-                results += '<a href="#">';
-                results += value.displayName;
-                results += '</a>';
-                results += '</li>';
+                var name = "checkbox-" + value.id;
+                results += '<input type="checkbox" name="';
+
+                results += name + '" id="' + name + '"';
+                if (value.active) {
+                    results += " checked=checked"
+                }
+                results += '>';
+                results += '<label for="' + name + '">';
+                results += value.displayName + '</label>';
 			});
-			jqList.html( results ).listview( 'refresh' );
-			$( 'select', jqList ).slider();
+			jqList.html( results ).trigger("create");
 		}
 	);
 });
 
 // LOAD JSON DATA (ID/NAME) AS LIST ITEMS FROM PATH
-DD.getListItems = function( path, jqList ) {
-	return $.getJSON( '/api/' + path, function( data ) {
-		var results = '';
-		$.each( data, function( index, item ) {
-			results += '<li data-id="' + item.id + '">' + item.name + '</li>';
-		});
-		jqList.html( results );
-		jqList.listview( 'refresh' );
-	});
-};
-
-DD.saveNewListItem = function( path, data, jqList ) {
-	return $.post( '/api/' + path, data, function( response ) {
-		jqList.prepend( '<li data-id="' + response.id + '">' + data.name + '</li>' );
-		jqList.listview( 'refresh' );
-	});
-};
+//DD.getListItems = function( path, jqList ) {
+//	return $.getJSON( '/api/' + path, function( data ) {
+//		var results = '';
+//		$.each( data, function( index, item ) {
+//			results += '<li data-id="' + item.id + '">' + item.name + '</li>';
+//		});
+//		jqList.html( results );
+//		jqList.listview( 'refresh' );
+//	});
+//};
+//
+//DD.saveNewListItem = function( path, data, jqList ) {
+//	return $.post( '/api/' + path, data, function( response ) {
+//		jqList.prepend( '<li data-id="' + response.id + '">' + data.name + '</li>' );
+//		jqList.listview( 'refresh' );
+//	});
+//};
