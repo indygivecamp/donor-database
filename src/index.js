@@ -15,12 +15,17 @@ $(document).on( 'pagebeforeshow', 'div#admin', function( e, data ) {
 		var id = index.toLowerCase().replace( / /g, '' );
 		
 		results += '<li><a href="#' + id + '" data-id="' + id + '">' + index + '</a></li>';
-		// CREATE NEW PAGE FOR THEM AS WELL
-		$( '<div data-role="page" data-type="admin" id="' + id + '" data-title="' + index + '"></div>' )
-			.appendTo( $.mobile.pageContainer ).html( content )
-			.find( 'h1' ).html( index ).end()
-			.find( 'input' ).attr( 'placeholder', index ).end()
-		;
+
+        if ( !document.getElementById(id) ) {
+
+            // CREATE NEW PAGE FOR THEM AS WELL
+            $( '<div data-role="page" data-type="admin" id="' + id + '" data-title="' + index + '"></div>' )
+                .appendTo( $.mobile.pageContainer ).html( content )
+                .find( 'h1' ).html( index ).end()
+                .find( 'input' ).attr( 'placeholder', index ).end()
+            ;
+
+        }
 	});
 	$( 'ul', page ).html( results ).listview( 'refresh' );
 });
@@ -40,8 +45,6 @@ $(document).on( 'pagebeforeshow', 'div[data-role="page"][data-type="admin"]', fu
 	page.find( 'input' ).attr( 'placeholder', title );
 	page.trigger( 'pagecreate' );
 
-	var jqList = $('fieldset', id);
-
 	// LOAD LOV DATA FOR THIS SUBPAGE
 	DD.promises.admin_lov.done(
 		function( data ) {
@@ -49,7 +52,6 @@ $(document).on( 'pagebeforeshow', 'div[data-role="page"][data-type="admin"]', fu
 			$.each( data[title], function( key, value ) {
                 var name = "checkbox-" + value.id;
                 results += '<input type="checkbox" name="';
-
                 results += name + '" id="' + name + '"';
                 if (value.active) {
                     results += " checked=checked";
@@ -58,26 +60,7 @@ $(document).on( 'pagebeforeshow', 'div[data-role="page"][data-type="admin"]', fu
                 results += '<label for="' + name + '">';
                 results += value.displayName + '</label>';
 			});
-			jqList.html( results ).trigger("create");
+            $('fieldset', id).html( results ).trigger("create");
 		}
 	);
 });
-
-// LOAD JSON DATA (ID/NAME) AS LIST ITEMS FROM PATH
-//DD.getListItems = function( path, jqList ) {
-//	return $.getJSON( '/api/' + path, function( data ) {
-//		var results = '';
-//		$.each( data, function( index, item ) {
-//			results += '<li data-id="' + item.id + '">' + item.name + '</li>';
-//		});
-//		jqList.html( results );
-//		jqList.listview( 'refresh' );
-//	});
-//};
-//
-//DD.saveNewListItem = function( path, data, jqList ) {
-//	return $.post( '/api/' + path, data, function( response ) {
-//		jqList.prepend( '<li data-id="' + response.id + '">' + data.name + '</li>' );
-//		jqList.listview( 'refresh' );
-//	});
-//};
