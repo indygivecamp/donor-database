@@ -6,6 +6,12 @@ DD.sortByOrdinal = function (a, b) {
 
 };
 
+DD.error = function () {
+
+    $.publish("app/error", arguments);
+
+};
+
 (function($) {
 
     var o = $({});
@@ -24,6 +30,19 @@ DD.sortByOrdinal = function (a, b) {
 
 }(jQuery));
 
+$.ajax({
+    beforeSend: function(){
+
+        $.publish("app/loading");
+
+    },
+    complete: function(){
+
+        $.publish("app/loaded");
+
+    }
+});
+
 $.subscribe("dom/loaded", function () {
 
     $.subscribe("app/loading", function () {
@@ -38,19 +57,6 @@ $.subscribe("dom/loaded", function () {
 
     });
 
-});
-
-$.ajax({
-    beforeSend: function(){
-
-        $.publish("app/loading");
-
-    },
-    complete: function(){
-
-        $.publish("app/loaded");
-
-    }
 });
 
 $.subscribe("api/init", function () {
@@ -119,7 +125,8 @@ $.subscribe("lov/update", function () {
                     displayName: lov.Name,
                     id: lov.LOVID,
                     ordinal: lov.DisplayOrder,
-                    active: lov.Active
+                    active: lov.Active,
+                    typeId: type.LOVTypeID
                 };
 
             });
@@ -147,11 +154,7 @@ $.subscribe("lov/update", function () {
 
     });
 
-    promise.fail(function () {
-
-        $.publish("app/error", arguments);
-
-    });
+    promise.fail(DD.error);
 
 });
 
@@ -172,3 +175,17 @@ $.subscribe("app/init", function () {
 });
 
 $.publish("app/init");
+
+$.subscribe("person/load", function (_, id) {
+
+    if (!id) {
+        return;
+    }
+
+    $.getJSON(DD.api.person + "/" + id)
+        .done(function (person) {
+            $.mobile.changePage( "/views/person.html", person);
+        })
+        .fail(DD.error);
+
+});

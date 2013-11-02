@@ -1,30 +1,52 @@
 var DD = DD || {};
 
-$(document).on( 'pagebeforeshow', 'div#person', function( e, data ) {
+//$(document).on( 'pagebeforeshow', 'div#person', function( e, data ) {
+//
+//    var page = $(e.currentTarget)
+//        , path = page.data('path')
+//        , id = '#' + page.attr('id')
+//        , personType = $("#person-type")
+//    ;
+//
+//    //fetch person
+//    $.getJSON(DD.api.person + "");
+//
+//
+//    //on fetch done create options for person-type
+//    $.each(DD.lov["Person Types"], function (opt) {
+//
+//        var option = "";
+//
+//        option += '<option value="' + opt.id + '"';
+////      make selected
+////        if () {
+////            option += ;
+////        }
+//        option += '>' + opt.displayName;
+//        option += '</option>';
+//
+//        $( option ).appendTo( personType );
+//
+//    });
+//
+//});
 
-    var page = $(e.currentTarget)
-        , path = page.data('path')
-        , id = '#' + page.attr('id')
-        , personType = $("#person-type")
-    ;
+$( document).on("click", ".details", function (event) {
 
-    //fetch person
+    var elm = event.target;
 
-    //on fetch done create options for person-type
-    $.each(DD.lov["Person Types"], function (opt) {
+    if (elm.dataset && elm.dataset.entity && elm.dataset.uid) {
 
-        var option = "";
+        $.publish(elm.dataset.entity + "/load", [elm.dataset.uid]);
 
-        option += '<option value="' + opt.id + '"';
-//      make selected
-//        if () {
-//            option += ;
-//        }
-        option += '>' + opt.displayName;
-        option += '</option>';
+    }
 
-        $( option ).appendTo( personType );
+});
 
-    });
+$( window ).on( "pagechange", function (event, data) {
+
+    if (data.options.target === "/views/person.html") {
+        console.log(event, data);
+    }
 
 });
