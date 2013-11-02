@@ -42,18 +42,6 @@ $(document).on( 'pagebeforeshow', 'div[data-role="page"][data-type="admin"]', fu
 
 	var jqList = $('fieldset', id);
 
-	// HANDLE ADD NEW ITEM CLICK
-//	$( id, page ).off().on( 'click', 'a', function(e) {
-//		var val = $('input', id).val();
-//		if( !!val ) {
-//			DD.saveNewListItem( path, { name: val }, jqList );
-//		}
-//	});
-//	$( id, page ).off().on( 'click', 'a', function(e) {
-//		// SET ACTIVE/INACTIVE
-//
-//	});
-
 	// LOAD LOV DATA FOR THIS SUBPAGE
 	DD.promises.admin_lov.done(
 		function( data ) {
