@@ -12,7 +12,7 @@ $(document).on( 'pagebeforeshow', 'div#admin', function( e, data ) {
 	// GRAB DD.Lov and chunk into list items
 	var results = '';
 	$.each( DD.lov, function( index, item ) {
-		var id = index.toLowerCase().replace( / /g, '' )
+		var id = index.toLowerCase().replace( / /g, '' );
 		
 		results += '<li><a href="#' + id + '" data-id="' + id + '">' + index + '</a></li>';
 		// CREATE NEW PAGE FOR THEM AS WELL
@@ -52,7 +52,7 @@ $(document).on( 'pagebeforeshow', 'div[data-role="page"][data-type="admin"]', fu
 
                 results += name + '" id="' + name + '"';
                 if (value.active) {
-                    results += " checked=checked"
+                    results += " checked=checked";
                 }
                 results += '>';
                 results += '<label for="' + name + '">';
