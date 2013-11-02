@@ -184,7 +184,7 @@ $.subscribe("person/load", function (_, id) {
 
     $.getJSON(DD.api.person + "/" + id)
         .done(function (person) {
-            $.mobile.changePage( "/views/person.html", person);
+            $.mobile.changePage( "/view/person.html", {entity: person});
         })
         .fail(DD.error);
 
