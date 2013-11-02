@@ -106,12 +106,14 @@ $(document).on( 'pagebeforeshow', 'div[data-role="page"][data-type="admin"]', fu
             		, contentType: 'application/json'
             		, data: lov
             	}).done(
-					DD.admin_lov.flush();
-					DD.admin_lov.update().done(
-						function() {
-							page.trigger('create');
-						}
-					);
+            		function() {
+						DD.admin_lov.flush();
+						DD.admin_lov.update().done(
+							function() {
+								page.trigger('create');
+							}
+						);
+            		}
             	);
             });
 		}
