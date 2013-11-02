@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Person</title>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+</head>
+<body>
+
+<div data-role="page">
+    <div data-role="header" data-theme="e">
+        <h1>Person</h1>
+
+    </div>
+
+    <div data-role="content">
+        <form>
+            <div data-role="fieldcontain">
+                <label for="person-first-name">First Name:</label>
+                <input type="text" data-clear-btn="true" name="person-first-name" id="person-first-name" value="">
+            </div>
+            <div data-role="fieldcontain">
+                <label for="person-last-name">Last Name:</label>
+                <input type="text" data-clear-btn="true" name="person-last-name" id="person-last-name" value="">
+            </div>
+            <div data-role="fieldcontain">
+                <label for="person-email">Email:</label>
+                <input type="email" data-clear-btn="true" name="person-email" id="person-email" value="">
+            </div>
+            <div data-role="fieldcontain">
+                <label for="person-notes">Notes:</label>
+                <textarea cols="40" rows="8" name="person-notes" id="person-notes"></textarea>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+</body>
+</html>
