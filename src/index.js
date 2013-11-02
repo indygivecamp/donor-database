@@ -55,11 +55,18 @@ $(document).on( 'pagebeforeshow', 'div[data-role="page"][data-type="admin"]', fu
 	});
 
 	// LOAD LOV DATA FOR THIS SUBPAGE
-	DD.promises.lov.done(
+	DD.promises.admin_lov.done(
 		function( data ) {
 			var results = '';
 			$.each( data[title], function( key, value ) {
-				results += '<li data-role="fieldcontain"><label>' + value.displayName + '</label><select name="toggle' + key + '" id="toggle' + key + '" data-role="slider"><option value="off">Hide</option><option value="on">Show</option></select></li>';
+                var icon = value.active ? "minus" : "plus",
+                    theme = value.active ? "b" : "c";
+				results += '<li data-theme="' + theme;
+                results += '" data-icon="' + icon + '">';
+                results += '<a href="#">';
+                results += value.displayName;
+                results += '</a>';
+                results += '</li>';
 			});
 			jqList.html( results ).listview( 'refresh' );
 			$( 'select', jqList ).slider();

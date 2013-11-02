@@ -105,8 +105,8 @@ $.subscribe("lov/update", function () {
         deferred = $.Deferred(),
         adminDeferred = $.Deferred();
 
-    $.publish("app/registerPromise", ["lov", deferred.promise()]);
     $.publish("app/registerPromise", ["admin_lov", adminDeferred.promise()]);
+    $.publish("app/registerPromise", ["lov", deferred.promise()]);
 
     promise.done(function (types) {
 
@@ -119,7 +119,8 @@ $.subscribe("lov/update", function () {
                 return {
                     displayName: lov.Name,
                     id: lov.LOVID,
-                    ordinal: lov.DisplayOrder
+                    ordinal: lov.DisplayOrder,
+                    active: lov.Active
                 };
 
             });
@@ -142,8 +143,8 @@ $.subscribe("lov/update", function () {
 
         });
 
-        deferred.resolveWith(this, [DD.lov]);
         adminDeferred.resolveWith(this, [DD.lov.admin]);
+        deferred.resolveWith(this, [DD.lov]);
 
     });
 
