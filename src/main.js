@@ -18,6 +18,35 @@ var DD = DD || {};
 
 }(jQuery));
 
+$.subscribe("dom/loaded", function () {
+
+    $.subscribe("app/loading", function () {
+
+        $.mobile.loading("show");
+
+    });
+
+    $.subscribe("app/loaded", function () {
+
+        $.mobile.loading("hide");
+
+    });
+
+});
+
+$.ajax({
+    beforeSend: function(){
+
+        $.publish("app/loading");
+
+    },
+    complete: function(){
+
+        $.publish("app/loaded");
+
+    }
+});
+
 $.subscribe("api/init", function () {
 
     //var host = "http://lebanonboysgirlsclub.org.mytempweb.com/api/";
@@ -49,11 +78,6 @@ $.subscribe("app/registerPromise", function (_, name, promise) {
 
 });
 
-$.subscribe("app/loading", function (_, promise) {
-
-
-});
-
 $.subscribe("app/error", function (_, error) {
 
     //TODO make this pretty
@@ -73,8 +97,6 @@ $.subscribe("lov/update", function () {
         deferred = $.Deferred();
 
     $.publish("app/registerPromise", ["lov", deferred.promise()]);
-
-    $.publish("app/loading", [promise]);
 
     promise.done(function (types) {
 
@@ -121,6 +143,12 @@ $.subscribe("app/init", function () {
     $.publish("lov/flush");
 
     $.publish("lov/update");
+
+    $(function () {
+
+        $.publish("dom/loaded");
+
+    });
 
 });
 
