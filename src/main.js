@@ -93,9 +93,8 @@ $.subscribe("app/error", function (event, promise, type, message) {
 
 $.subscribe("lov/flush", function () {
 
-    DD.lov = {
-        admin: {}
-    };
+    DD.lov = {};
+    DD.admin_lov = {};
 
 });
 
@@ -114,7 +113,7 @@ $.subscribe("lov/update", function () {
 
             var name = type.LOVName;
 
-            DD.lov.admin[name] = type.LOVs.map(function (lov) {
+            DD.admin_lov[name] = type.LOVs.map(function (lov) {
 
                 return {
                     displayName: lov.Name,
@@ -143,7 +142,7 @@ $.subscribe("lov/update", function () {
 
         });
 
-        adminDeferred.resolveWith(this, [DD.lov.admin]);
+        adminDeferred.resolveWith(this, [DD.admin_lov]);
         deferred.resolveWith(this, [DD.lov]);
 
     });
