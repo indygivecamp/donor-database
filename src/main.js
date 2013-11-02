@@ -16,7 +16,6 @@
 
         global[fName] = f.bind.bind( flip( a[fName] ) );
         global[fName + "To"] = f.bind.bind( a[fName] );
-
     }
 
     global.each = f.bind.bind( flip( a.forEach ) );

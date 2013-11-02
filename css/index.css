@@ -1,0 +1,13 @@
+div.form > ul {
+	margin: 0px;
+}
+
+div.inline input[name='new'] {
+    width: 300px;
+}
+
+div.inline > div {
+    display: inline-block;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
