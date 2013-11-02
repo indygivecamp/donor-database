@@ -20,7 +20,8 @@ var DD = DD || {};
 
 $.subscribe("api/init", function () {
 
-    var host = "http://lebanonboysgirlsclub.org.mytempweb.com/api/";
+    //var host = "http://lebanonboysgirlsclub.org.mytempweb.com/api/";
+    var host = "http://localhost:8000/src-test/";
 
     var resources = [
         ["lov",         "LOV"       ],
@@ -48,32 +49,35 @@ $.subscribe("lov/flush", function () {
 
 $.subscribe("lov/update", function () {
 
-    function addTypes(types) {
-
-    }
-
-    function addRecord(record) {
-
-    }
-
-    function addRecords(records) {
-
-    }
-
-
-
     $.getJSON(DD.api.lovtype)
         .done(function (types) {
 
-            applyTypes(types);
+            $.each(types, function (i, type) {
 
-            $.getJSON(DD.api.lov)
-                .done(addRecords)
-                .fail();
+                DD.lov[type.LOVName] = type.LOVs.map(function (lov) {
+
+                    if (lov.Active) {
+
+                        return {
+                            displayName: lov.Name,
+                            id: lov.LOVID,
+                            ordinal: lov.DisplayOrder
+                        };
+
+                    }
+
+                });
+
+                DD.lov[type.LOVName].sort(function (a, b) {
+
+                    return a.ordinal - b.ordinal;
+
+                });
+
+            });
+
         })
         .fail()
-
-
 
 });
 
@@ -83,7 +87,7 @@ $.subscribe("init", function () {
 
     $.publish("lov/flush");
 
-    $.publish("lov/udpate");
+    $.publish("lov/update");
 
 });
 
