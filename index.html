@@ -23,41 +23,9 @@
         <p>View internal page called <a href="#fundraisers">fundraisers</a></p>
         <a href="/views/person.html" data-prefetch="true">This link will prefetch the person page</a>
         <p>
-            <!--<a href="/views/admin.html" data-prefetch="true">Admin</a>-->
-            <a href="#admin">Admin</a>
-        </p><!-- /page -->
-    </div><!-- /content -->
-</div><!-- /page -->
-
-
-<div data-role="page" id="admin">
-    <div data-role="header" data-theme="e">
-        <h1>Admin</h1>
+            <a href="/views/admin.html" data-prefetch="true">Admin</a>
+        </p>
     </div>
-
-    <div data-role="content">
-        <ul data-role="listview" data-inset="true" ></ul>
-    </div>
-
-    <!-- TEMPLATE FOR SUBPAGES-->
-    <script type="text/template" id="admin-page-content">
-        <div data-role="header">
-            <h1></h1>
-        </div><!-- /header -->
-
-        <div class="form" data-role="content">
-            <div class="inline">
-                <input type="text" name="new" placeholder="" value="" data-clear-btn="true">
-                <a href="#" data-role="button" data-inline="true">Add New</a>
-            </div>
-            <div>
-                <legend><h3>Select available options:</h3></legend>
-                <fieldset data-role="controlgroup">
-                </fieldset>
-            </div>
-        </div>
-        <!-- /content -->
-    </script>
 </div>
 
 </body>
