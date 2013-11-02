@@ -119,17 +119,7 @@ $.subscribe("lov/update", function () {
 
             var name = type.LOVName;
 
-            DD.admin_lov[name] = type.LOVs.map(function (lov) {
-
-                return {
-                    displayName: lov.Name,
-                    id: lov.LOVID,
-                    ordinal: lov.DisplayOrder,
-                    active: lov.Active,
-                    typeId: type.LOVTypeID
-                };
-
-            });
+            DD.admin_lov[name] = type.LOVs;
 
             DD.lov[name] = type.LOVs.map(function (lov) {
 
