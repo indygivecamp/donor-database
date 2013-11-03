@@ -91,11 +91,7 @@ $( window ).on( "pagechange", function (event, data) {
 
         DD.person = DD.person || {};
 
-        DD.person[person.PersonID] = person;
-
-        $("#person-new-donation").data("uid", person.PersonID);
-        $("#person-new-contact").data("uid", person.PersonID);
-
+		 //build dropdowns
         $.each(DD.lov["Person Types"], function (i, opt) {
             var option = "";
 
@@ -108,12 +104,7 @@ $( window ).on( "pagechange", function (event, data) {
             $(option).appendTo(personType);
             personType.selectmenu("refresh");
         });
-        personTitle.val(person.Title);
-        personFirstName.val(person.FirstName);
-        personLastName.val(person.LastName);
-        personSuffix.val(person.Suffix);
-        personOrgName.val(person.OrgName);
-        $.each(DD.lov.Genders, function (i, opt) {
+		$.each(DD.lov.Genders, function (i, opt) {
             var option = "";
 
             option += '<option value="' + opt.id + '"';
@@ -125,20 +116,9 @@ $( window ).on( "pagechange", function (event, data) {
             $(option).appendTo(personGender);
             personGender.selectmenu("refresh");
         });
-        personNotes.val(person.FamilyInfo);
-        personAddress1.val(person.Address1);
-        personAddress2.val(person.Address2);
-        personCity.val(person.City);
-        personState.val(person.State);
-        personZip.val(person.Zip);
-        personCounty.val(person.County);
-        personEmail.val(person.EmailAddress);
-        personPhone1.val(person.Phone1);
-        personPhone2.val(person.Phone2);
-        personPhone3.val(person.Phone3);
-        $.each(DD.lov.PhoneTypes, function (i, opt) {
+		$.each(DD.lov.PhoneTypes, function (i, opt) {
             var optionPre = "", optionPost = "", option1Chk = "", option2Chk = "", option3Chk = "";
-            
+        
             if (person.PhoneType1 === opt.id) {
                 option1Chk = " selected";
             }
@@ -150,7 +130,7 @@ $( window ).on( "pagechange", function (event, data) {
             }
             optionPre = '<option value="' + opt.id + '"';
             optionPost = '>' + opt.displayName + '</option>';
-            
+        
             $(optionPre+option1Chk+optionPost).appendTo(personPhoneType1);
             $(optionPre+option2Chk+optionPost).appendTo(personPhoneType2);
             $(optionPre+option3Chk+optionPost).appendTo(personPhoneType3);
@@ -175,74 +155,99 @@ $( window ).on( "pagechange", function (event, data) {
             $(option).appendTo(personAddInterests);
             personAddInterests.selectmenu("refresh");
         });
-        $.each(person.Interests, function (i, opt) {
-            var item = "";
+		
+		if(person.PersonID){
+        	DD.person[person.PersonID] = person;
 
-            item += '<li data-icon="delete" id="int' + opt.InterestID + '"><a href="#" interestid="' + opt.InterestID + '">' + opt.LOV.Name;
-            item += '</a></li>';
-            $(item).appendTo(personInterests);
-            personInterests.listview("refresh");
-        });
-
-        $.each(person.Contacts || [], function (i, contact) {
-
-            var item = "",
-                parts = [];
-
-            DD.contact = DD.contact || {};
-
-            DD.contact[contact.ContactID] = contact;
-
-            item += '<li class="person-edit-contact" data-icon="gear" data-uid="';
-            item += person.PersonID;
-            item += '" id="';
-            item += contact.ContactID + '"><a href="#">';
-            item += new Date(contact.ScheduleDate).toLocaleString().split(" ")[0];
-            if (contact.LOV_Channel) {
-                parts.push(contact.LOV_Channel.Name);
-            }
-            if (contact.LOV_Fundraiser) {
-                parts.push(contact.LOV_Fundraiser.Name);
-            }
-            if (contact.LOV_Outcome) {
-                parts.push(contact.LOV_Outcome.Name);
-            }
-            if (parts.length) {
-                item += ' - ';
-            }
-            item += parts.join(" - ");
-            item += '</a></li>';
-
-            $(item).appendTo(personContacts);
-            personContacts.listview("refresh");
-
-        });
-
-        $.each(person.Donations || [], function (i, donation) {
-
-            var item = "";
-
-            DD.donation = DD.donation || {};
-
-            DD.donation[donation.DonationID] = donation;
-
-            item += '<li class="person-edit-donation" data-icon="gear" data-uid="';
-            item += person.PersonID;
-            item += '" id="';
-            item += donation.DonationID + '"><a href="#">';
-            item += new Date(donation.DonationDate).toLocaleString()
-                .replace(/(\S+)(.+)/, function (a,b) {
-                    return b;
-                });
-            item += ' - $';
-            item += String(donation.Amount).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            item += '</a></li>';
-
-            $(item).appendTo(personDonations);
-            personDonations.listview("refresh");
-
-        });
+	        $("#person-new-donation").data("uid", person.PersonID);
+	        $("#person-new-contact").data("uid", person.PersonID);
         
+	        personTitle.val(person.Title);
+	        personFirstName.val(person.FirstName);
+	        personLastName.val(person.LastName);
+	        personSuffix.val(person.Suffix);
+	        personOrgName.val(person.OrgName);
+	        
+	        personNotes.val(person.FamilyInfo);
+	        personAddress1.val(person.Address1);
+	        personAddress2.val(person.Address2);
+	        personCity.val(person.City);
+	        personState.val(person.State);
+	        personZip.val(person.Zip);
+	        personCounty.val(person.County);
+	        personEmail.val(person.EmailAddress);
+	        personPhone1.val(person.Phone1);
+	        personPhone2.val(person.Phone2);
+	        personPhone3.val(person.Phone3);
+	        
+	        $.each(person.Interests, function (i, opt) {
+	            var item = "";
+
+	            item += '<li data-icon="delete" id="int' + opt.InterestID + '"><a href="#" interestid="' + opt.InterestID + '">' + opt.LOV.Name;
+	            item += '</a></li>';
+	            $(item).appendTo(personInterests);
+	            personInterests.listview("refresh");
+	        });
+
+	        $.each(person.Contacts || [], function (i, contact) {
+
+	            var item = "",
+	                parts = [];
+
+	            DD.contact = DD.contact || {};
+
+	            DD.contact[contact.ContactID] = contact;
+
+	            item += '<li class="person-edit-contact" data-icon="gear" data-uid="';
+	            item += person.PersonID;
+	            item += '" id="';
+	            item += contact.ContactID + '"><a href="#">';
+	            item += new Date(contact.ScheduleDate).toLocaleString().split(" ")[0];
+	            if (contact.LOV_Channel) {
+	                parts.push(contact.LOV_Channel.Name);
+	            }
+	            if (contact.LOV_Fundraiser) {
+	                parts.push(contact.LOV_Fundraiser.Name);
+	            }
+	            if (contact.LOV_Outcome) {
+	                parts.push(contact.LOV_Outcome.Name);
+	            }
+	            if (parts.length) {
+	                item += ' - ';
+	            }
+	            item += parts.join(" - ");
+	            item += '</a></li>';
+
+	            $(item).appendTo(personContacts);
+	            personContacts.listview("refresh");
+
+	        });
+
+	        $.each(person.Donations || [], function (i, donation) {
+
+	            var item = "";
+
+	            DD.donation = DD.donation || {};
+
+	            DD.donation[donation.DonationID] = donation;
+
+	            item += '<li class="person-edit-donation" data-icon="gear" data-uid="';
+	            item += person.PersonID;
+	            item += '" id="';
+	            item += donation.DonationID + '"><a href="#">';
+	            item += new Date(donation.DonationDate).toLocaleString()
+	                .replace(/(\S+)(.+)/, function (a,b) {
+	                    return b;
+	                });
+	            item += ' - $';
+	            item += String(donation.Amount).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	            item += '</a></li>';
+
+	            $(item).appendTo(personDonations);
+	            personDonations.listview("refresh");
+
+	        });
+    	}
         // Add delete interest handler
         $( '#person-interests', page ).off().on( 'click', function( e ) {
             var intID = e.target.attributes.interestid.value;

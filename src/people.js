@@ -22,3 +22,7 @@ $( document ).on( "pagebeforeshow", 'div#people', function( e, data ) {
 		}
 	);
 });
+	
+$(document).on('click', '#add-person', function(){
+	$.publish('person/load');
+});
