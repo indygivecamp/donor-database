@@ -4,35 +4,30 @@
 # GUI
 Basic user interface for interacting with the database
 
-Landing page
-------------
+# Landing page
 People -> Add, Search, or Edit Persons or Organizations
 Scheduled Contacts -> List of people that have a contact activity without a completion date
 Admin ->  Configure lists for interests, fund raisers, outcomes, sources, etc.
 
     People
-    ------
-    Search bar searches both people and organizations
+      Search bar searches both people and organizations
 
         Person Page
-        -----------
-        Relationship: individual or organization
-        Information: Title, name, org name, gender ,notes
-        Address: person or organization's address
-        Interests: list of items defined in the admin
-            Example interests: "Sports Programs", "Childhood education" "Volunteering"
-        Contact Info: Email, phone numbers, contact preference
-        Contact Activity: an interaction with a person or organziation.
-            Schedule Date, Complete Date, Fundraiser, Challen, outcome, Notes
-        Donation Activity: Amount, Date, Source
+          Relationship: individual or organization
+          Information: Title, name, org name, gender ,notes
+          Address: person or organization's address
+          Interests: list of items defined in the admin
+              Example interests: "Sports Programs", "Childhood education" "Volunteering"
+          Contact Info: Email, phone numbers, contact preference
+          Contact Activity: an interaction with a person or organziation.
+              Schedule Date, Complete Date, Fundraiser, Challen, outcome, Notes
+          Donation Activity: Amount, Date, Source
 
     Scheduled Contacts
-    ------------------
-    Search bar searches for people or organizations that have an empty completed date for a contact activity.  This can be utilized as a To-Do List.
-    Selecting a name routes you to the Person page for that individual
+      Search bar searches for people or organizations that have an empty completed date for a contact activity.  This can be utilized as a To-Do List.
+      Selecting a name routes you to the Person page for that individual
 
     Admin 
-    -----
       Pages:
           Contact Channels: Ex. Phone, Email, In Person, Mail, etc.
           Funraisers (people that are raising funds): John Doe, Jane Done, etc.
@@ -43,7 +38,6 @@ Admin ->  Configure lists for interests, fund raisers, outcomes, sources, etc.
           Genders: Male, Female, N/A, Other, etc.
           Phone Types: Home, Cell, Work, etc.
           Contact Preferences: Home Phone, Cell Phone, Mail, Email, etc.
-
 
 # SQL
 
