@@ -140,18 +140,14 @@ $.subscribe("app/error", function (event, promise, type, message) {
     }   
 });
 
-$.subscribe("lov/flush", function () {
-
-    DD.lov = {};
-    DD.admin_lov = {};
-
-});
-
 $.subscribe("lov/update", function () {
 
     var promise = $.getJSON(DD.api.lovtype),
         deferred = $.Deferred(),
         adminDeferred = $.Deferred();
+
+    DD.lov = {};
+    DD.admin_lov = {};
 
     $.publish("app/registerPromise", ["admin_lov", adminDeferred.promise()]);
     $.publish("app/registerPromise", ["lov", deferred.promise()]);
@@ -188,6 +184,20 @@ $.subscribe("lov/update", function () {
     });
 
     promise.fail(DD.error);
+
+});
+
+$.subscribe("page/refresh", function (_, page) {
+
+    if (page && page.trigger) {
+
+        DD.promises.lov.done(function () {
+
+            page.trigger("refresh");
+
+        });
+
+    }
 
 });
 
