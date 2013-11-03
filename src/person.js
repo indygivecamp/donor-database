@@ -39,10 +39,10 @@ $( document).on("click", "#person-new-contact", function () {
 
 $( document).on("click", "li.person-edit-contact", function () {
 
-    var donation = DD.contact[this.dataset.uid],
-        person = DD.person[this.id];
+    var contact = DD.contact[this.id],
+        person = DD.person[this.dataset.uid];
 
-    $.publish("contact/load", [donation, person]);
+    $.publish("contact/load", [contact, person]);
 
 });
 
