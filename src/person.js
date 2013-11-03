@@ -180,7 +180,7 @@ $( window ).on( "pagechange", function (event, data) {
 	        personPhone2.val(person.Phone2);
 	        personPhone3.val(person.Phone3);
 	        
-	        $.each(person.Interests, function (i, opt) {
+	        $.each(person.Interests || [], function (i, opt) {
 	            var item = "";
 
 	            item += '<li data-icon="delete" id="int' + opt.InterestID + '"><a href="#" interestid="' + opt.InterestID + '">' + opt.LOV.Name;
@@ -247,7 +247,9 @@ $( window ).on( "pagechange", function (event, data) {
 	            personDonations.listview("refresh");
 
 	        });
-    	}
+    	} else {
+			$('.one-to-many-panel').hide();
+		}
         // Add delete interest handler
         $( '#person-interests', page ).off().on( 'click', function( e ) {
             var intID = e.target.attributes.interestid.value;
@@ -322,6 +324,8 @@ $( window ).on( "pagechange", function (event, data) {
                 // NEW PERSON
                 $.post( DD.api.person, person ).done(
                     function( data ) {
+						person.PersonID = data.PersonID;
+						$('.one-to-many-panel').show();
                         $.mobile.changePage( "/view/person.html", {entity: person});
                     }
                 );
