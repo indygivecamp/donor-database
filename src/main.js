@@ -188,3 +188,12 @@ $.subscribe("donation/load", function (_, donation, person) {
     });
 
 });
+
+$.subscribe("contact/load", function (_, contact, person) {
+
+    $.mobile.changePage( "/view/contact.html", {
+        entity: contact,
+        relatedEntity: person
+    });
+
+});
