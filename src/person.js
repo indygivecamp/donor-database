@@ -142,10 +142,7 @@ $( window ).on( "pagechange", function (event, data) {
             item += person.PersonID;
             item += '" id="';
             item += contact.ContactID + '"><a href="#">';
-            item += new Date(contact.ScheduleDate).toLocaleString()
-                .replace(/(\S+)(.+)/, function (a,b) {
-                    return b;
-                });
+            item += new Date(contact.ScheduleDate).toLocaleString().split(" ")[0];
             if (contact.LOV_Channel) {
                 parts.push(contact.LOV_Channel.Name);
             }
