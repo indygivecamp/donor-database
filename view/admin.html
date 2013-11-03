@@ -23,9 +23,12 @@
     <!-- TEMPLATE FOR SUBPAGES-->
     <script type="text/template" id="admin-page-content">
         <div data-role="header" data-theme="e">
-            <a href="view/admin.html" data-icon="arrow-l">Admin</a>
+            <div data-role="controlgroup" data-type="horizontal" class="ui-btn-left">
+                <a href="view/admin.html" data-icon="arrow-l" data-role="button">Admin</a>
+                <a href="index.html" data-icon="home" data-role="button">Main</a>
+            </div>
             <h1></h1>
-            <a href="#" data-icon="check">Save</a>
+            <a href="#" data-icon="check" class="ui-btn-right">Save</a>
         </div><!-- /header -->
 
         <div class="form" data-role="content">
