@@ -187,13 +187,15 @@ $.subscribe("lov/update", function () {
 
 });
 
-$.subscribe("page/refresh", function (_, page) {
+$.subscribe("page/refresh", function (_, page, callback) {
 
     if (page && page.trigger) {
 
-        DD.promises.lov.done(function () {
+        DD.promises.lov.done(function (data) {
 
             page.trigger("refresh");
+
+            callback(data);
 
         });
 
