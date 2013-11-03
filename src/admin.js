@@ -71,11 +71,11 @@ $(document).on( 'pagebeforeshow', 'div[data-role="page"][data-type="admin"]', fu
 			});
             jqFieldSet.html( results ).trigger( 'create' );
             // ADD HANDLERS FOR 'ADD NEW' AND 'ACTIVE/INACTIVE'
-            $('a[name="addNew"]', id).off().on( 'click', function( e ) {
+            $('a[name=addNew]', id).off().on( 'click', function( e ) {
             	//$.post();
-            	var t = $(e.currentTarget)
-            		, val = $('input[name="new"]').val()
-            	;
+            	var t = $(this).closest(".inline").find("input[name=new]"),
+            	    val = t.val();
+                
             	if( !!val ) {
             		// SAVE NEW TYPE
             		var newData = {
@@ -83,7 +83,7 @@ $(document).on( 'pagebeforeshow', 'div[data-role="page"][data-type="admin"]', fu
             			, Active: true
             			, LOVTypeID: lovTypeID
             			, DisplayOrder: 1
-            		}
+            		};
 					$.post( DD.api.lov, newData, function( response ) {
 						DD.admin_lov.flush();
 						DD.admin_lov.update().done(
@@ -91,7 +91,8 @@ $(document).on( 'pagebeforeshow', 'div[data-role="page"][data-type="admin"]', fu
 								page.trigger('create');
 							}
 						);
-					});
+					})
+                    .fail(DD.error);
 				}
             });
 
@@ -101,7 +102,7 @@ $(document).on( 'pagebeforeshow', 'div[data-role="page"][data-type="admin"]', fu
             		, lov = data[title][t.data('key')]
             	;
             	lov.Active = t.prop( 'checked' );
-            	$.ajax( DD.api.lov, {
+            	$.ajax( DD.api.lov + "/" + id, {
             		type: 'PUT'
             		, contentType: 'application/json'
             		, data: lov
@@ -114,8 +115,19 @@ $(document).on( 'pagebeforeshow', 'div[data-role="page"][data-type="admin"]', fu
 							}
 						);
             		}
-            	);
+            	).fail(DD.error);
             });
 		}
 	);
 });
+
+/*$(document).on("click", "#new-button", function() {
+    var val = $("#new-text").text();
+    $.post(DD.api.lov, {
+            Name: val,
+            Action: true,
+            LOVTypeID: lovTypeID,
+            DisplayOrder: 
+        }
+});
+*/
