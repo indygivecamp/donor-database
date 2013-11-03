@@ -1,5 +1,5 @@
-                                      Donor Database
-                                      ==============
+#                                      Donor Database
+
 
 # GUI
 Basic user interface for interacting with the database
