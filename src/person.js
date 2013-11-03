@@ -70,6 +70,7 @@ $( window ).on( "pagechange", function (event, data) {
 
         //INTERESTS
             personInterests = $("#person-interests"),
+            personAddInterests = $("#person-addinterests"),
 
         //CONTACT INFO
             personEmail = $("#person-email"),
@@ -169,6 +170,11 @@ $( window ).on( "pagechange", function (event, data) {
             $(option).appendTo(personContactPref);
             personContactPref.selectmenu("refresh");
         });
+        $.each(DD.lov.Interests, function (i, opt) {
+            var option = '<option value="' + opt.id + '">' + opt.displayName + '</option>';
+            $(option).appendTo(personAddInterests);
+            personAddInterests.selectmenu("refresh");
+        });
         $.each(person.Interests, function (i, opt) {
             var item = "";
 
@@ -248,6 +254,24 @@ $( window ).on( "pagechange", function (event, data) {
             }).done(
                 function( data ) {
                     $('#person-interests').find('li#int' + intID).remove();
+                }
+            );
+        });
+        
+        // Add new interest handler
+        $('#person-new-interest').off().on( 'click', function( e ) {
+            var intID = $('#person-addinterests').val();
+            $.ajax( DD.api.interest, {
+                type: 'POST'
+                , data: JSON.stringify({ PersonID: person.PersonID, Interest1: intID })
+                , contentType: 'application/json'
+            }).done(
+                function( data ) {
+                    var lov = DD.lov.Interests.filter(function(item){ return item.id === data.Interest1; })[0] || {Name: "Unknown"};
+                    var item = '<li data-icon="delete" id="int' + data.InterestID + '"><a href="#" interestid="' + data.InterestID + '">' + lov.displayName;
+                    item += '</a></li>';
+                    $(item).appendTo(personInterests);
+                    personInterests.listview("refresh");
                 }
             );
         });

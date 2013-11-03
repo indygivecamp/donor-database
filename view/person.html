@@ -138,16 +138,18 @@
                     
                     <div data-role="fieldcontain">
                         <label for="person-addinterests">Add Interest:</label>
-                        <input type="text" data-clear-btn="true" name="person-addinterests" id="person-addinterests" value="">
-                        <a href="#" id="person-new-interest" data-role="button" data-inline="true" data-icon="check" data-theme="b">Add</a>
+                        <div data-role="controlgroup" data-type="horizontal">
+                            <select name="person-addinterests" id="person-addinterests">
+                            </select>
+                            <a href="#" id="person-new-interest" data-role="button" data-inline="true" data-icon="check" data-theme="b">Add</a>
+                        </div>
                     </div>
                     
                     <div data-role="fieldcontain">
-                        <label for="person-interests">Selected Interests:</label>
+                        <label for="person-interests">Assigned Interests (Click on one to delete):</label>
                     </div>
-                    <ul data-role="listview" data-theme="d" id="person-interests">
+                    <ul data-role="listview" data-inset="true" data-theme="d" id="person-interests">
                     </ul>
-                    
                 </div>
 
             <!-- CONTACT INFO -->
