@@ -92,23 +92,30 @@ $( window ).on( "pagechange", function (event, data) {
         DD.person = DD.person || {};
 
 		 //build dropdowns
-		 $.each(DD.lov["Person Types"], function (i, opt) {
-		 	var option = "";
-		 	option += '<option value="' + opt.id + '"';
-         	option += '>' + opt.displayName;
-			option += '</option>';
-			$(option).appendTo(personType);
-		 	personType.selectmenu("refresh");
-		 });
+        $.each(DD.lov["Person Types"], function (i, opt) {
+            var option = "";
+
+            option += '<option value="' + opt.id + '"';
+            if (person.PersonType === opt.id) {
+                option += " selected";
+            }
+            option += '>' + opt.displayName;
+            option += '</option>';
+            $(option).appendTo(personType);
+            personType.selectmenu("refresh");
+        });
 		$.each(DD.lov.Genders, function (i, opt) {
-			var option = "";
-			option += '<option value="' + opt.id + '"';
-			option += '>' + opt.displayName;
-			option += '</option>';
-			$(option).appendTo(personGender);
-			personGender.selectmenu("refresh");
-		});
-		
+            var option = "";
+
+            option += '<option value="' + opt.id + '"';
+            if (person.Gender === opt.id) {
+                option += " selected";
+            }
+            option += '>' + opt.displayName;
+            option += '</option>';
+            $(option).appendTo(personGender);
+            personGender.selectmenu("refresh");
+        });
 		$.each(DD.lov.PhoneTypes, function (i, opt) {
             var optionPre = "", optionPost = "", option1Chk = "", option2Chk = "", option3Chk = "";
         
@@ -154,23 +161,7 @@ $( window ).on( "pagechange", function (event, data) {
 
 	        $("#person-new-donation").data("uid", person.PersonID);
 	        $("#person-new-contact").data("uid", person.PersonID);
-       
-      		//set the persontype (we already built the dropdown)
-			personType.find('option').each(function(option){
-				var $opt = $(option);
-				if(parseInt($opt.val(), 10) === person.PersonType){
-					$opt.attr('selected', 'selected');
-				}
- 			});
-     
-			//set the person gender
-			personGender.find('option').each(function(option){
-			 	var $opt = $(option);
-				if(parseInt($opt.val(), 10) === person.Gender){
-					$opt.attr('selected', 'selected');
- 				}
-			});
-	        
+        
 	        personTitle.val(person.Title);
 	        personFirstName.val(person.FirstName);
 	        personLastName.val(person.LastName);
