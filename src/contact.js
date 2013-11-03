@@ -156,10 +156,9 @@ $( window ).on( "pagechange", function (event, data) {
                     if (donation.Amount) {
                         //CHECK FOR DONATION ID
                         if (donation.DonationID) {
-                            deferreds.push($.ajax(DD.api.donation + "/" + donation.DonationId, {
+                            deferreds.push($.ajax(DD.api.donation + "/" + donation.DonationID, {
                                 type: 'PUT',
                                 data: JSON.stringify(cloneDonation),
-                                dataType: "json",
                                 contentType: "application/json"
                             }));
                         } else {
@@ -169,7 +168,7 @@ $( window ).on( "pagechange", function (event, data) {
                                 dataType: "json",
                                 contentType: "application/json"
                             }).done(function (res) {
-                                contact.DonationID = res.DonationId;
+                                contact.DonationID = res.DonationID;
                                 contact.Donation = res.Donation;
                             }));
                         }
@@ -191,10 +190,9 @@ $( window ).on( "pagechange", function (event, data) {
                     if (donation.Amount) {
                         //CHECK FOR DONATION ID
                         if (donation.DonationID) {
-                            deferreds.push($.ajax( DD.api.donation + "/" + donation.DonationId, {
+                            deferreds.push($.ajax( DD.api.donation + "/" + donation.DonationID, {
                                 type: 'PUT',
                                 data: JSON.stringify(cloneDonation),
-                                dataType: "json",
                                 contentType: 'application/json'
                             }));
                         } else {
@@ -204,16 +202,15 @@ $( window ).on( "pagechange", function (event, data) {
                                 dataType: "json",
                                 contentType: "application/json"
                             }).done(function (res) {
-                                contact.DonationID = res.DonationId;
+                                contact.DonationID = res.DonationID;
                                 contact.Donation = res.Donation;
                             }));
                         }
                     }
                     $.when.apply($, deferreds).done(function () {
-                        $.ajax( DD.api.contact + "/" + contact.ContactId, {
+                        $.ajax( DD.api.contact + "/" + contact.ContactID, {
                             type: 'PUT',
                             data: JSON.stringify(cloneContact),
-                            dataType: "json",
                             contentType: 'application/json'
                         })
                         .done(toPerson)
