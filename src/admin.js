@@ -11,18 +11,18 @@ $(document).on( 'pagebeforeshow', 'div#admin', function( e, data ) {
 
 	// GRAB DD.Lov and chunk into list items
 	var results = '';
-	$.each( DD.lov, function( index, item ) {
-		var id = index.toLowerCase().replace( / /g, '' );
+	$.each( DD.lov, function( name, items ) {
+		var id = name.toLowerCase().replace( / /g, '' );
 		
-		results += '<li><a href="#' + id + '" data-id="' + id + '">' + index + '</a></li>';
+		results += '<li><a href="#' + id + '" data-id="' + id + '">' + name + '</a></li>';
 
         if ( !document.getElementById(id) ) {
 
             // CREATE NEW PAGE FOR THEM AS WELL
-            $( '<div data-role="page" data-type="admin" data-lovtypeid="' + item.TypeId + '" id="' + id + '" data-title="' + index + '"></div>' )
+            $( '<div data-role="page" data-type="admin" data-lovtypeid="' + items.TypeId + '" id="' + id + '" data-title="' + name + '"></div>' )
                 .appendTo( $.mobile.pageContainer ).html( content )
-                .find( 'h1' ).html( index ).end()
-                .find( 'input' ).attr( 'placeholder', index ).end()
+                .find( 'h1' ).html( name ).end()
+                .find( 'input' ).attr( 'placeholder', name ).end()
             ;
 
         }
@@ -84,7 +84,7 @@ $(document).on( 'pagebeforeshow', 'div[data-role="page"][data-type="admin"]', fu
             			, LOVTypeID: lovTypeID
             			, DisplayOrder: 1
             		};
-					$.post( DD.api.lov, newData, function( response ) {
+					$.post( DD.api.lov, JSON.stringify(newData), function( response ) {
 						DD.admin_lov.flush();
 						DD.admin_lov.update().done(
 							function() {
@@ -105,7 +105,7 @@ $(document).on( 'pagebeforeshow', 'div[data-role="page"][data-type="admin"]', fu
             	$.ajax( DD.api.lov + "/" + id, {
             		type: 'PUT'
             		, contentType: 'application/json'
-            		, data: lov
+            		, data: JSON.stringify(lov)
             	}).done(
             		function() {
 						DD.admin_lov.flush();
