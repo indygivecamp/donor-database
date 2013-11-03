@@ -42,7 +42,9 @@ DD.dateOffset = (new Date()).getTimezoneOffset() * 60000;
 
 DD.inputToSQLDate = function (str) {
 
-    return (new Date(new Date(str).valueOf() + DD.dateOffset)).toISOString();
+    var d = str ? new Date(str) : new Date();
+
+    return (new Date(d.valueOf() + DD.dateOffset)).toISOString();
 
 };
 

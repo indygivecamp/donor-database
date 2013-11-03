@@ -9,14 +9,23 @@ $( window ).on( "pagechange", function (event, data) {
             donation = contact.Donation || {},
             page = $('div#contact');
 
-        function toPerson() {
-            $.mobile.changePage( "/view/person.html", {entity: person});
-        }
-
-        // ADD BACK HANDLER
-        $( 'a[name="back"]', page ).off().on( 'click', toPerson);
-
         DD.promises.lov.done(function() {
+
+            function toPerson(res) {
+
+                res.LOV_Channel = DD.admin_lov["Contact Channels"].filter(function (e) {return e.LOVID === res.Channel;})[0];
+                res.LOV_Fundraiser = DD.admin_lov.Fundraisers.filter(function (e) {return e.LOVID === res.FundRaiser;})[0];
+                res.LOV_Outcome = DD.admin_lov["Contact Outcomes"].filter(function (e) {return e.LOVID === res.Outcome;})[0];
+
+                person.ContactID = res.ContactID;
+                person.Contacts = person.Contacts || [];
+                person.Contacts.push(res);
+                $.mobile.changePage( "/view/person.html", {entity: person});
+
+            }
+
+            // ADD BACK HANDLER
+            $( 'a[name="back"]', page ).off().on( 'click', toPerson);
 
             var contactScheduleDate = $("#contact-schedule-date"),
                 contactCompleteDate = $("#contact-complete-date"),
@@ -123,6 +132,7 @@ $( window ).on( "pagechange", function (event, data) {
                 contact.Channel = contactChannel.val();
                 contact.Outcome = contactOutcome.val();
                 contact.Notes = contactNotes.val();
+                contact.PersonID = person.PersonID;
 
                 //SERIALIZE DONATION
                 donation.Amount = contactDonationAmount.val();
@@ -148,17 +158,30 @@ $( window ).on( "pagechange", function (event, data) {
                         if (donation.DonationID) {
                             deferreds.push($.ajax(DD.api.donation + "/" + donation.DonationId, {
                                 type: 'PUT',
-                                data: cloneDonation,
-                                contentType: 'application/json'
+                                data: JSON.stringify(cloneDonation),
+                                dataType: "json",
+                                contentType: "application/json"
                             }));
                         } else {
-                            deferreds.push($.post( DD.api.donation, donation ));
+                            deferreds.push($.ajax(DD.api.donation, {
+                                type: "POST",
+                                data: JSON.stringify(cloneDonation),
+                                dataType: "json",
+                                contentType: "application/json"
+                            }).done(function (res) {
+                                contact.DonationID = res.DonationId;
+                                contact.Donation = res.Donation;
+                            }));
                         }
                     }
                     $.when.apply($, deferreds).done(function () {
-
-                        $.post( DD.api.contact, contact )
-                            .done(toPerson)
+                        $.ajax({
+                            url: DD.api.contact,
+                            type: "POST",
+                            data: JSON.stringify(cloneContact),
+                            dataType: "json",
+                            contentType: "application/json"
+                        }).done(toPerson)
                             .fail(DD.error);
 
                     }).fail(DD.error);
@@ -170,17 +193,27 @@ $( window ).on( "pagechange", function (event, data) {
                         if (donation.DonationID) {
                             deferreds.push($.ajax( DD.api.donation + "/" + donation.DonationId, {
                                 type: 'PUT',
-                                data: cloneDonation,
+                                data: JSON.stringify(cloneDonation),
+                                dataType: "json",
                                 contentType: 'application/json'
                             }));
                         } else {
-                            deferreds.push($.post( DD.api.donation, donation ));
+                            deferreds.push($.ajax(DD.api.donation, {
+                                type: "POST",
+                                data: JSON.stringify(cloneDonation),
+                                dataType: "json",
+                                contentType: "application/json"
+                            }).done(function (res) {
+                                contact.DonationID = res.DonationId;
+                                contact.Donation = res.Donation;
+                            }));
                         }
                     }
                     $.when.apply($, deferreds).done(function () {
                         $.ajax( DD.api.contact + "/" + contact.ContactId, {
                             type: 'PUT',
-                            data: cloneContact,
+                            data: JSON.stringify(cloneContact),
+                            dataType: "json",
                             contentType: 'application/json'
                         })
                         .done(toPerson)
