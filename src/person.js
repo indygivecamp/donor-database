@@ -88,6 +88,7 @@ $( window ).on( "pagechange", function (event, data) {
             personPhone3 = $("#person-phone3"),
 
         //CONTACTS
+            personContacts = $("#person-contacts"),
 
         //DONATIONS
             personDonations = $("#person-donations");
@@ -138,6 +139,31 @@ $( window ).on( "pagechange", function (event, data) {
         //set label
         //set value
 
+        $.each(person.Contacts || [], function (i, contact) {
+
+            var item = "";
+
+            DD.contact = DD.contact || {};
+
+            DD.contact[contact.ContactID] = contact;
+
+            item += '<li class="person-edit-contact" data-icon="gear" data-uid="';
+            item += person.PersonID;
+            item += '" id="';
+            item += contact.ContactID + '"><a href="#">';
+            item += new Date(contact.ScheduleDate).toISOString()
+                .replace(/(\S+)(.+)/, function (a,b) {
+                    return b;
+                });
+            item += ' - $';
+            item += String(donation.Amount).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            item += '</a></li>';
+
+            $(item).appendTo(personDonations);
+            personDonations.listview("refresh");
+
+        });
+
         $.each(person.Donations || [], function (i, donation) {
 
             var item = "";
@@ -150,7 +176,7 @@ $( window ).on( "pagechange", function (event, data) {
             item += person.PersonID;
             item += '" id="';
             item += donation.DonationID + '"><a href="#">';
-            item += new Date(donation.DonationDate).toLocaleString()
+            item += new Date(donation.DonationDate).toISOString()
                 .replace(/(\S+)(.+)/, function (a,b) {
                     return b;
                 });
