@@ -6,7 +6,9 @@ Basic user interface for interacting with the database
 
 # Landing page
 People -> Add, Search, or Edit Persons or Organizations
+
 Scheduled Contacts -> List of people that have a contact activity without a completion date
+
 Admin ->  Configure lists for interests, fund raisers, outcomes, sources, etc.
 
 ## People
