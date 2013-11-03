@@ -13,10 +13,14 @@ $( window ).on( "pagechange", function (event, data) {
 				, selectValues = DD.lov['Donation Sources']
 			;
 
-			$( 'label#donation-donor', page ).html(
-				person.Title + ' ' + person.FirstName + ' ' + person.LastName + ' ' + person.Suffix +
+			var name =
+				( !!person.Title ? person.Title + ' ' : '' ) +
+				( !!person.FirstName ? person.FirstName + ' ' : '' ) +
+				( !!person.LastName ? person.LastName + ' ' : '' ) +
+				( !!person.Suffix ? person.Suffix + ' ' : '' ) +
 				( !!person.OrgName ? '( ' + person.OrgName + ' )' : '' )
-			);
+			;
+			$( 'label#donation-donor', page ).html(name);
 			// SELECT (SOURCE) OPTIONS
 			var options = '';
 			$.each(selectValues, function(key, value) {   
@@ -26,7 +30,9 @@ $( window ).on( "pagechange", function (event, data) {
 			if( !!donation ) {
 				$('select#donation-source', page ).val( donation.Source ).selectmenu("refresh");
 				$('input#donation-amount', page ).val( donation.Amount );
-				$('input#donation-date', page ).val( !!donation.DonationDate ? donation.DonationDate.split('T')[0] : '' );
+
+				var donationDate = new Date( donation.DonationDate );
+				$('input#donation-date', page ).val( '' + donationDate.getFullYear() + '-' + (donationDate.getMonth() + 1) + '-' + donationDate.getDate() );
 			}
 
 			// ADD BACK HANDLER
