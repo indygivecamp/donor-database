@@ -13,30 +13,29 @@ Admin ->  Configure lists for interests, fund raisers, outcomes, sources, etc.
   Search bar searches both people and organizations
 
   **Person Page**
-    - Relationship: individual or organization
-    - Information: Title, name, org name, gender ,notes
-    - Address: person or organization's address
-    - Interests: list of items defined in the admin
-    - Contact Info: Email, phone numbers, contact preference
-    - Contact Activity: an interaction with a person or organziation.
-        Schedule Date, Complete Date, Fundraiser, Challen, outcome, Notes
-    - Donation Activity: Amount, Date, Source
+- Relationship: individual or organization
+- Information: Title, name, org name, gender ,notes
+- Address: person or organization's address
+- Interests: list of items defined in the admin
+- Contact Info: Email, phone numbers, contact preference
+- Contact Activity: an interaction with a person or organziation.
+- Donation Activity: Amount, Date, Source
 
 ## Scheduled Contacts
   Search bar searches for people or organizations that have an empty completed date for a contact activity.  This can be utilized as a To-Do List.
   Selecting a name routes you to the Person page for that individual
 
 ## Admin 
-  Pages:
-    - Contact Channels: Ex. Phone, Email, In Person, Mail, etc.
-    - Funraisers (people that are raising funds): John Doe, Jane Done, etc.
-    - Contact Outcomes: Ex. Donation, Deferred Donation, No Answer, etc.
-    - Donation Sources: Ex. Annual Auction, Golf Outing, General Donation, etc.
-    - Interests: Ex. Math, Sports Programs, Volunteering, etc.
-    - Person Types: Individual, Organization Contact, etc.
-    - Genders: Male, Female, N/A, Other, etc.
-    - Phone Types: Home, Cell, Work, etc.
-    - Contact Preferences: Home Phone, Cell Phone, Mail, Email, etc.
+**Pages:**
+- Contact Channels: Ex. Phone, Email, In Person, Mail, etc.
+- Funraisers (people that are raising funds): John Doe, Jane Done, etc.
+- Contact Outcomes: Ex. Donation, Deferred Donation, No Answer, etc.
+- Donation Sources: Ex. Annual Auction, Golf Outing, General Donation, etc.
+- Interests: Ex. Math, Sports Programs, Volunteering, etc.
+- Person Types: Individual, Organization Contact, etc.
+- Genders: Male, Female, N/A, Other, etc.
+- Phone Types: Home, Cell, Work, etc.
+- Contact Preferences: Home Phone, Cell Phone, Mail, Email, etc.
 
 # SQL
 
