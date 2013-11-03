@@ -65,9 +65,11 @@ $( window ).on( "pagechange", function (event, data) {
 					);
 				} else {
 					// DONATION EXISTS
-					$.ajax( DD.api.donation, {
+                    var d = JSON.parse(JSON.stringify(donation));
+                    delete d.LOV_Source;
+					$.ajax( DD.api.donation + '/' + donation.DonationID, {
 						type: 'PUT'
-						, data: donation
+						, data: JSON.stringify(d)
 						, contentType: 'application/json'
 					}).done(
 						function( data ) {
