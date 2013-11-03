@@ -11,8 +11,17 @@ $( window ).on( "pagechange", function (event, data) {
 
         DD.promises.lov.done(function() {
 
-            function toPerson() {
+            function toPerson(res) {
+
+                res.LOV_Channel = DD.admin_lov["Contact Channels"].filter(function (e) {return e.LOVID === res.Channel;})[0];
+                res.LOV_Fundraiser = DD.admin_lov.Fundraisers.filter(function (e) {return e.LOVID === res.FundRaiser;})[0];
+                res.LOV_Outcome = DD.admin_lov["Contact Outcomes"].filter(function (e) {return e.LOVID === res.Outcome;})[0];
+
+                person.ContactID = res.ContactID;
+                person.Contacts = person.Contacts || [];
+                person.Contacts.push(res);
                 $.mobile.changePage( "/view/person.html", {entity: person});
+
             }
 
             // ADD BACK HANDLER
@@ -123,6 +132,7 @@ $( window ).on( "pagechange", function (event, data) {
                 contact.Channel = contactChannel.val();
                 contact.Outcome = contactOutcome.val();
                 contact.Notes = contactNotes.val();
+                contact.PersonID = person.PersonID;
 
                 //SERIALIZE DONATION
                 donation.Amount = contactDonationAmount.val();
@@ -155,7 +165,7 @@ $( window ).on( "pagechange", function (event, data) {
                         } else {
                             deferreds.push($.ajax(DD.api.donation, {
                                 type: "POST",
-                                data: JSON.stringify(donation),
+                                data: JSON.stringify(cloneDonation),
                                 dataType: "json",
                                 contentType: "application/json"
                             }).done(function (res) {
@@ -168,7 +178,7 @@ $( window ).on( "pagechange", function (event, data) {
                         $.ajax({
                             url: DD.api.contact,
                             type: "POST",
-                            data: JSON.stringify(contact),
+                            data: JSON.stringify(cloneContact),
                             dataType: "json",
                             contentType: "application/json"
                         }).done(toPerson)
@@ -190,7 +200,7 @@ $( window ).on( "pagechange", function (event, data) {
                         } else {
                             deferreds.push($.ajax(DD.api.donation, {
                                 type: "POST",
-                                data: JSON.stringify(donation),
+                                data: JSON.stringify(cloneDonation),
                                 dataType: "json",
                                 contentType: "application/json"
                             }).done(function (res) {

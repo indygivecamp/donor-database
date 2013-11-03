@@ -77,7 +77,7 @@ $.ajaxSetup({
         $.publish("app/loaded");
 
     },
-    //crossDomain: true,
+    crossDomain: true,
     xhrFields: {
         'withCredentials': true
     }
