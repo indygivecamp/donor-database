@@ -43,12 +43,24 @@ $( document).on("click", ".details", function (event) {
 
 });
 
+$( document).on("click", "#person-new-donation", function () {
+
+    $.publish("donation/load", [{}, person]);
+
+});
+
+$( document).on("click", "li.person-edit-donation", function (event) {
+
+    var donation = DD.donation[this.dataset.uid],
+        person = DD.person[this.id];
+
+    $.publish("donation/load", [donation, person]);
+
+});
+
 $( window ).on( "pagechange", function (event, data) {
 
     if (data.options.target === "/view/person.html") {
-
-        //TODO remove
-        console.log(data.options.entity);
 
         //type
         var person = data.options.entity,
@@ -73,11 +85,17 @@ $( window ).on( "pagechange", function (event, data) {
             personEmail = $("#person-email"),
             personPhone1 = $("#person-phone1"),
             personPhone2 = $("#person-phone2"),
-            personPhone3 = $("#person-phone3");
+            personPhone3 = $("#person-phone3"),
 
         //CONTACTS
 
         //DONATIONS
+            personDonations = $("#person-donations");
+
+
+        DD.person = DD.person || {};
+
+        DD.person[person.PersonID] = person;
 
         $.each(DD.lov["Person Types"], function (i, opt) {
             var option = "";
@@ -119,6 +137,31 @@ $( window ).on( "pagechange", function (event, data) {
         //phones
         //set label
         //set value
+
+        $.each(person.Donations || [], function (i, donation) {
+
+            var item = "";
+
+            DD.donation = DD.donation || {};
+
+            DD.donation[donation.DonationID] = donation;
+
+            item += '<li class="person-edit-donation" data-icon="gear" data-uid="';
+            item += person.PersonID;
+            item += '" id="';
+            item += donation.DonationID + '"><a href="#">';
+            item += new Date(donation.DonationDate).toLocaleString()
+                .replace(/(\S+)(.+)/, function (a,b) {
+                    return b;
+                });
+            item += ' - $';
+            item += String(donation.Amount).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            item += '</a></li>';
+
+            $(item).appendTo(personDonations);
+            personDonations.listview("refresh");
+
+        });
 
     }
 

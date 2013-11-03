@@ -179,3 +179,12 @@ $.subscribe("person/load", function (_, id) {
         .fail(DD.error);
 
 });
+
+$.subscribe("donation/load", function (_, donation, person) {
+
+    $.mobile.changePage( "/view/donation.html", {
+        entity: donation,
+        relatedEntity: person
+    });
+
+});
