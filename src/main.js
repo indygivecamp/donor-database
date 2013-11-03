@@ -212,6 +212,7 @@ $.publish("app/init");
 $.subscribe("person/load", function (_, id) {
 
     if (!id) {
+		$.mobile.changePage( "/view/person.html", {entity: {}});
         return;
     }
 
