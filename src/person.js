@@ -172,7 +172,7 @@ $( window ).on( "pagechange", function (event, data) {
         $.each(person.Interests, function (i, opt) {
             var item = "";
 
-            item += '<li data-icon="delete"><a href="#" interestid="' + opt.InterestID + '">' + opt.LOV.Name;
+            item += '<li data-icon="delete" id="int' + opt.InterestID + '"><a href="#" interestid="' + opt.InterestID + '">' + opt.LOV.Name;
             item += '</a></li>';
             $(item).appendTo(personInterests);
             personInterests.listview("refresh");
@@ -242,12 +242,12 @@ $( window ).on( "pagechange", function (event, data) {
             var intID = e.target.attributes.interestid.value;
             
             $.ajax( DD.api.interest + '/' + intID, {
-                type: 'PUT'
-                , data: JSON.stringify(p)
+                type: 'DELETE'
+                , data: null
                 , contentType: 'application/json'
             }).done(
                 function( data ) {
-                    $.mobile.changePage( "/view/person.html", {entity: person});
+                    $('#person-interests').find('li#int' + intID).remove();
                 }
             );
         });
