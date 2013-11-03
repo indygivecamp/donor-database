@@ -247,7 +247,9 @@ $( window ).on( "pagechange", function (event, data) {
 	            personDonations.listview("refresh");
 
 	        });
-    	}
+    	} else {
+			$('.one-to-many-panel').hide();
+		}
         // Add delete interest handler
         $( '#person-interests', page ).off().on( 'click', function( e ) {
             var intID = e.target.attributes.interestid.value;
@@ -322,6 +324,7 @@ $( window ).on( "pagechange", function (event, data) {
                 // NEW PERSON
                 $.post( DD.api.person, person ).done(
                     function( data ) {
+						person.PersonID = data.PersonID;
                         $.mobile.changePage( "/view/person.html", {entity: person});
                     }
                 );

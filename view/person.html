@@ -132,29 +132,9 @@
 
                 </div>
 
-            <!-- INTERESTS -->
-                <div data-role="collapsible">
-                    <h2>Interests</h2>
-                    
-                    <div data-role="fieldcontain">
-                        <label for="person-addinterests">Add Interest:</label>
-                        <div data-role="controlgroup" data-type="horizontal">
-                            <select name="person-addinterests" id="person-addinterests">
-                            </select>
-                            <a href="#" id="person-new-interest" data-role="button" data-inline="true" data-icon="check" data-theme="b">Add</a>
-                        </div>
-                    </div>
-                    
-                    <div data-role="fieldcontain">
-                        <label for="person-interests">Assigned Interests (Click on one to delete):</label>
-                    </div>
-                    <ul data-role="listview" data-inset="true" data-theme="d" id="person-interests">
-                    </ul>
-                </div>
-
             <!-- CONTACT INFO -->
 
-                <div data-role="collapsible">
+                <div data-role="collapsible" id="contact-info-pane">
                     <h2>Contact Info</h2>
 
                     <!-- email address -->
@@ -213,9 +193,30 @@
 
                 </div>
 
+				<!-- INTERESTS -->
+                <div data-role="collapsible" id = "interest-pane">
+                    <h2>Interests</h2>
+
+                    <div data-role="fieldcontain">
+                        <label for="person-addinterests">Add Interest:</label>
+                        <div data-role="controlgroup" data-type="horizontal">
+                            <select name="person-addinterests" id="person-addinterests">
+                            </select>
+                            <a href="#" id="person-new-interest" data-role="button" data-inline="true" data-icon="check" data-theme="b">Add</a>
+                        </div>
+                    </div>
+
+                    <div data-role="fieldcontain">
+                        <label for="person-interests">Assigned Interests (Click on one to delete):</label>
+                    </div>
+                    <ul data-role="listview" data-inset="true" data-theme="d" id="person-interests">
+                    </ul>
+                </div>
+	            
+
             <!-- CONTACT -->
 
-                <div data-role="collapsible">
+                <div data-role="collapsible" id="contact-pane">
                     <h2>Contact Activity</h2>
                     <ul data-role="listview" data-theme="d" id="person-contacts">
                     </ul>
