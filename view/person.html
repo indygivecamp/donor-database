@@ -14,8 +14,8 @@
 <div data-role="page" id="person">
     <div data-role="header" data-theme="b">
         <div data-role="controlgroup" data-type="horizontal" class="ui-btn-left">
-            <a href="people.html" data-icon="arrow-l" data-role="button">People</a>
-            <a href="../index.html" data-icon="home" data-role="button">Main</a>
+            <a href="people.html" name="back" data-icon="arrow-l" data-role="button">People</a>
+            <a href="../index.html" name="save" data-icon="home" data-role="button">Main</a>
         </div>
         <a href="#" data-icon="check" name="save" data-role="button" class="ui-btn-right">Save</a>
         <h1>Person</h1>
@@ -135,7 +135,19 @@
             <!-- INTERESTS -->
                 <div data-role="collapsible">
                     <h2>Interests</h2>
-
+                    
+                    <div data-role="fieldcontain">
+                        <label for="person-addinterests">Add Interest:</label>
+                        <input type="text" data-clear-btn="true" name="person-addinterests" id="person-addinterests" value="">
+                        <a href="#" id="person-new-interest" data-role="button" data-inline="true" data-icon="check" data-theme="b">Add</a>
+                    </div>
+                    
+                    <div data-role="fieldcontain">
+                        <label for="person-interests">Selected Interests:</label>
+                    </div>
+                    <ul data-role="listview" data-theme="d" id="person-interests">
+                    </ul>
+                    
                 </div>
 
             <!-- CONTACT INFO -->
@@ -150,37 +162,52 @@
                         <input type="email" data-clear-btn="true" name="person-email" id="person-email" value="">
                     </div>
 
-                <!-- phone1 -->
-
-                    <!--<div data-role="controlgroup" data-type="horizontal">-->
-
-                    <div class="inline">
-
-                            <select name="select-native-11" id="select-native-11">
-                                <option value="#">Cell</option>
-                                <option value="#">Home</option>
-                                <option value="#">Work</option>
-                            </select>
-
-                            <input type="tel" data-clear-btn="true" name="person-phone3" id="person-phone3" value="">
-                    </div>
-                    <!--</div>-->
-
-                <!-- phone2 -->
+                    <!-- phone1 -->
 
                     <div data-role="fieldcontain">
-                        <label for="person-phone1">Home Phone:</label>
+                        <label for="person-phone1">Phone 1:</label>
                         <input type="tel" data-clear-btn="true" name="person-phone1" id="person-phone1" value="">
                     </div>
-
-                <!-- phone3 -->
-
+                    
                     <div data-role="fieldcontain">
-                        <label for="person-phone2">Work Phone:</label>
-                        <input type="tel" data-clear-btn="true" name="person-phone2" id="person-phone2" value="">
+                        <label for="person-phonetype1">Phone 1 Type:</label>
+                        <select name="person-phonetype1" id="person-phonetype1">
+                        </select>
                     </div>
 
-                <!-- contact preference -->
+                    <!-- phone2 -->
+
+                    <div data-role="fieldcontain">
+                        <label for="person-phone2">Phone 2:</label>
+                        <input type="tel" data-clear-btn="true" name="person-phone2" id="person-phone2" value="">
+                    </div>
+                    
+                    <div data-role="fieldcontain">
+                        <label for="person-phonetype2">Phone 2 Type:</label>
+                        <select name="person-phonetype2" id="person-phonetype2">
+                        </select>
+                    </div>
+
+                    <!-- phone3 -->
+
+                    <div data-role="fieldcontain">
+                        <label for="person-phone3">Phone 3:</label>
+                        <input type="tel" data-clear-btn="true" name="person-phone3" id="person-phone3" value="">
+                    </div>
+                    
+                    <div data-role="fieldcontain">
+                        <label for="person-phonetype3">Phone 3 Type:</label>
+                        <select name="person-phonetype3" id="person-phonetype3">
+                        </select>
+                    </div>
+
+                    <!-- contact preference -->
+                    
+                    <div data-role="fieldcontain">
+                        <label for="person-contactpref">Contact Preference:</label>
+                        <select name="person-contactpref" id="person-contactpref">
+                        </select>
+                    </div>
 
                 </div>
 

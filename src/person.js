@@ -51,7 +51,8 @@ $( window ).on( "pagechange", function (event, data) {
     if (data.options.target === "/view/person.html") {
 
         //type
-        var person = data.options.entity,
+        var page = $('div#person'),
+            person = data.options.entity,
             personType = $("#person-type"),
             personTitle = $("#person-title"),
             personFirstName = $("#person-first-name"),
@@ -68,12 +69,17 @@ $( window ).on( "pagechange", function (event, data) {
             personCounty = $("#person-county"),
 
         //INTERESTS
+            personInterests = $("#person-interests"),
 
         //CONTACT INFO
             personEmail = $("#person-email"),
             personPhone1 = $("#person-phone1"),
             personPhone2 = $("#person-phone2"),
             personPhone3 = $("#person-phone3"),
+            personPhoneType1 = $("#person-phonetype1"),
+            personPhoneType2 = $("#person-phonetype2"),
+            personPhoneType3 = $("#person-phonetype3"),
+            personContactPref = $("#person-contactpref"),
 
         //CONTACTS
             personContacts = $("#person-contacts"),
@@ -87,13 +93,14 @@ $( window ).on( "pagechange", function (event, data) {
         DD.person[person.PersonID] = person;
 
         $("#person-new-donation").data("uid", person.PersonID);
+        $("#person-new-contact").data("uid", person.PersonID);
 
         $.each(DD.lov["Person Types"], function (i, opt) {
             var option = "";
 
             option += '<option value="' + opt.id + '"';
             if (person.PersonType === opt.id) {
-                option += "checked=checked";
+                option += " selected";
             }
             option += '>' + opt.displayName;
             option += '</option>';
@@ -110,7 +117,7 @@ $( window ).on( "pagechange", function (event, data) {
 
             option += '<option value="' + opt.id + '"';
             if (person.Gender === opt.id) {
-                option += "checked=checked";
+                option += " selected";
             }
             option += '>' + opt.displayName;
             option += '</option>';
@@ -124,10 +131,52 @@ $( window ).on( "pagechange", function (event, data) {
         personState.val(person.State);
         personZip.val(person.Zip);
         personCounty.val(person.County);
-        personEmail.val(person.Email);
-        //phones
-        //set label
-        //set value
+        personEmail.val(person.EmailAddress);
+        personPhone1.val(person.Phone1);
+        personPhone2.val(person.Phone2);
+        personPhone3.val(person.Phone3);
+        $.each(DD.lov.PhoneTypes, function (i, opt) {
+            var optionPre = "", optionPost = "", option1Chk = "", option2Chk = "", option3Chk = "";
+            
+            if (person.PhoneType1 === opt.id) {
+                option1Chk = " selected";
+            }
+            if (person.PhoneType2 === opt.id) {
+                option2Chk = " selected";
+            }
+            if (person.PhoneType3 === opt.id) {
+                option3Chk = " selected";
+            }
+            optionPre = '<option value="' + opt.id + '"';
+            optionPost = '>' + opt.displayName + '</option>';
+            
+            $(optionPre+option1Chk+optionPost).appendTo(personPhoneType1);
+            $(optionPre+option2Chk+optionPost).appendTo(personPhoneType2);
+            $(optionPre+option3Chk+optionPost).appendTo(personPhoneType3);
+            personPhoneType1.selectmenu("refresh");
+            personPhoneType2.selectmenu("refresh");
+            personPhoneType3.selectmenu("refresh");
+        });
+        $.each(DD.lov["Contact Preferences"], function (i, opt) {
+            var option = "";
+
+            option += '<option value="' + opt.id + '"';
+            if (person.ContactPreference === opt.id) {
+                option += " selected";
+            }
+            option += '>' + opt.displayName;
+            option += '</option>';
+            $(option).appendTo(personContactPref);
+            personContactPref.selectmenu("refresh");
+        });
+        $.each(person.Interests, function (i, opt) {
+            var item = "";
+
+            item += '<li data-icon="delete"><a href="#" interestid="' + opt.InterestID + '">' + opt.LOV.Name;
+            item += '</a></li>';
+            $(item).appendTo(personInterests);
+            personInterests.listview("refresh");
+        });
 
         $.each(person.Contacts || [], function (i, contact) {
 
@@ -187,7 +236,89 @@ $( window ).on( "pagechange", function (event, data) {
             personDonations.listview("refresh");
 
         });
+        
+        // Add delete interest handler
+        $( '#person-interests', page ).off().on( 'click', function( e ) {
+            var intID = e.target.attributes.interestid.value;
+            
+            $.ajax( DD.api.interest + '/' + intID, {
+                type: 'PUT'
+                , data: JSON.stringify(p)
+                , contentType: 'application/json'
+            }).done(
+                function( data ) {
+                    $.mobile.changePage( "/view/person.html", {entity: person});
+                }
+            );
+        });
 
+        // ADD BACK HANDLER
+        $( 'a[name="back"]', page ).off().on( 'click', function( e ) {
+            $.mobile.changePage( "/view/person.html", {entity: person});
+        });
+        
+        // ADD SAVE HANDLER
+        $( 'a[name="save"]', page ).off().on( 'click', function( e ) {
+
+            if( !personType.val() || !personLastName.val() || !personGender.val() ) {
+                return;
+            }
+            
+            // REQUIRED FIELDS PROVIDED, CONTINUE
+            person.PersonType = personType.val();
+            person.Title = personTitle.val();
+            person.FirstName = personFirstName.val();
+            person.LastName = personLastName.val();
+            person.Suffix = personSuffix.val();
+            person.OrgName = personOrgName.val();
+            person.Gender = personGender.val();
+            person.FamilyInfo = personNotes.val();
+            person.Address1 = personAddress1.val();
+            person.Address2 = personAddress2.val();
+            person.City = personCity.val();
+            person.State = personState.val();
+            person.Zip = personZip.val();
+            person.County = personCounty.val();
+            person.EmailAddress = personEmail.val();
+            person.Phone1 = personPhone1.val();
+            person.Phone2 = personPhone2.val();
+            person.Phone3 = personPhone3.val();
+            person.PhoneType1 = personPhoneType1.val();
+            person.PhoneType2 = personPhoneType2.val();
+            person.PhoneType3 = personPhoneType3.val();
+            person.ContactPreference = personContactPref.val();
+            //person. = person.val();
+
+            if( !person.PersonID ) {
+                // NEW PERSON
+                $.post( DD.api.person, person ).done(
+                    function( data ) {
+                        $.mobile.changePage( "/view/person.html", {entity: person});
+                    }
+                );
+            } else {
+                // PERSON EXISTS
+                var p = JSON.parse(JSON.stringify(person));
+                delete p.LOV_ContactPreference;
+                delete p.LOV_Gender;
+                delete p.LOV_PersonType;
+                delete p.LOV_PhoneType1;
+                delete p.LOV_PhoneType2;
+                delete p.LOV_PhoneType3;
+                delete p.Contacts;
+                delete p.Donations;
+                delete p.Interests;
+                $.ajax( DD.api.person + '/' + person.PersonID, {
+                    type: 'PUT'
+                    , data: JSON.stringify(p)
+                    , contentType: 'application/json'
+                }).done(
+                    function( data ) {
+                        $.mobile.changePage( "/view/person.html", {entity: person});
+                    }
+                );
+            }
+        });
     }
 
 });
