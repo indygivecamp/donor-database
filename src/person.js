@@ -155,8 +155,7 @@ $( window ).on( "pagechange", function (event, data) {
                 .replace(/(\S+)(.+)/, function (a,b) {
                     return b;
                 });
-            item += ' - $';
-            item += String(donation.Amount).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            //TODO add more stuff?
             item += '</a></li>';
 
             $(item).appendTo(personDonations);
