@@ -3,15 +3,13 @@ $( document ).on( "pagebeforeshow", 'div#people', function( e, data ) {
 
 	var page = $(e.currentTarget);
 
-	$.get( 'http://localhost:8000/src-test/People' ).done(
+	$.get(DD.api.person).done(
 		function( data ) {
 
-			var data = JSON.parse( data )
-				, jqList = $('ul', page)
+			var jqList = $('ul', page)
 				, results = ''
 			;
 			$.each( data, function( index, item ) {
-
 				var name =
 					( !!item.LastName ? item.LastName + ', ' : '' ) +
 					( !!item.FirstName ? item.FirstName : '' ) +

@@ -3,19 +3,19 @@ $( document ).on( "pagebeforeshow", 'div#todo', function( e, data ) {
 
 	var page = $(e.currentTarget);
 
-	$.get( 'http://localhost:8000/src-test/Todo' ).done(
+	$.get(DD.api.todo).done(
 		function( data ) {
 
-			var data = JSON.parse( data )
-				, jqList = $('ul', page)
+			var jqList = $('ul', page)
 				, results = ''
+                , currDt = new Date()
 			;
 			$.each( data, function( index, item ) {
-				console.log( item );
+                var due = new Date(item.ScheduleDate);
 				var name =
 					item.LOV_Fundraiser.Name + ' - ' +
 					item.LOV_Channel.Name + ' - Due: ' +
-					new Date(item.ScheduleDate).toLocaleString().split(" ")[0];
+                    (due < currDt ? "<span style='color: red;'>" + due.toLocaleString().split(" ")[0] + "</span>" : due.toLocaleString().split(" ")[0]);
 				;
 				results += '<li><a href="#" data-uid="' + item.PersonID + '" data-entity="person" class="details">' + name + '</a></li>';
 			});
