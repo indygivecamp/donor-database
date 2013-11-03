@@ -38,6 +38,14 @@ DD.dateToInput = function (date) {
 
 };
 
+DD.dateOffset = (new Date()).getTimezoneOffset() * 60000;
+
+DD.inputToSQLDate = function (str) {
+
+    return (new Date(new Date(str).valueOf() + DD.dateOffset)).toISOString();
+
+};
+
 (function($) {
 
     var o = $({});

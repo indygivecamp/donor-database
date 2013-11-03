@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<div data-role="page" id="donation">
+<div data-role="page" id="contact">
     <div data-role="header" data-theme="b">
         <a href="#" name="back" data-icon="arrow-l" data-theme="b">Back</a>
         <h1>Contact</h1>
@@ -53,6 +53,23 @@
             <div data-role="fieldcontain">
                 <label for="contact-notes">Notes:</label>
                 <textarea cols="40" rows="8" name="contact-notes" id="contact-notes"></textarea>
+            </div>
+
+            <!-- DONATION -->
+            <div data-role="collapsible">
+                <h2>Donation Activity</h2>
+                <div data-role="fieldcontain">
+                    <label for="contact-donation-amount">Amount:</label>
+                    <input type="number" step="0.01" data-clear-btn="true" name="contact-donation-amount" id="contact-donation-amount" value="">
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="contact-donation-date">Date:</label>
+                    <input type="date" data-clear-btn="true" name="contact-donation-date" id="contact-donation-date" value="">
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="contact-donation-source">Source:</label>
+                    <select name="contact-donation-source" id="contact-donation-source"></select>
+                </div>
             </div>
         </form>
     </div>
