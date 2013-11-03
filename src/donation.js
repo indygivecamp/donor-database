@@ -5,7 +5,7 @@ $( window ).on( "pagechange", function (event, data) {
 		return;
 	}
 
-	DD.promises.lov().done(
+	DD.promises.lov.done(
 		function() {
 			var person = data.options.relatedEntity
 				, donation = data.options.entity || {}
