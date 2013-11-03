@@ -87,6 +87,7 @@ $( window ).on( "pagechange", function (event, data) {
         DD.person[person.PersonID] = person;
 
         $("#person-new-donation").data("uid", person.PersonID);
+        $("#person-new-contact").data("uid", person.PersonID);
 
         $.each(DD.lov["Person Types"], function (i, opt) {
             var option = "";
