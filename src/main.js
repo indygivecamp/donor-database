@@ -92,9 +92,12 @@ $.subscribe("app/registerPromise", function (_, name, promise) {
 
 $.subscribe("app/error", function (event, promise, type, message) {
     console.log(arguments);
-    //TODO make this pretty
-
-
+    $.mobile.changePage( "/view/error.html", { role: "dialog" } );
+    if (message) {
+        $(document).one("pageload", function () {
+            $("#error-message").text(message);
+        });
+    }   
 });
 
 $.subscribe("lov/flush", function () {
