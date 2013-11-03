@@ -11,7 +11,7 @@ $( document ).on( "pagebeforeshow", 'div#people', function( e, data ) {
 				, results = ''
 			;
 			$.each( data, function( index, item ) {
-				console.log( item );
+
 				var name =
 					( !!item.LastName ? item.LastName + ', ' : '' ) +
 					( !!item.FirstName ? item.FirstName : '' ) +

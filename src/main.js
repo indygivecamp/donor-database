@@ -12,6 +12,32 @@ DD.error = function () {
 
 };
 
+DD.lpad = function (len) {
+
+    return function (arr) {
+
+        return arr.map(function (n) {
+
+            var strN = String(n);
+
+            return strN.length > len ? strN : new Array(len - strN.length + 1).join("0") + strN;
+
+        });
+
+    };
+
+};
+
+DD.dateToInput = function (date) {
+
+    return DD.lpad(2)([
+        date.getFullYear(),
+        date.getMonth() + 1,
+        date.getDate()
+    ]).join("-");
+
+};
+
 (function($) {
 
     var o = $({});

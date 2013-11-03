@@ -30,9 +30,7 @@ $( window ).on( "pagechange", function (event, data) {
 			if( !!donation ) {
 				$('select#donation-source', page ).val( donation.Source ).selectmenu("refresh");
 				$('input#donation-amount', page ).val( donation.Amount );
-
-				var donationDate = new Date( donation.DonationDate );
-				$('input#donation-date', page ).val( '' + donationDate.getFullYear() + '-' + (donationDate.getMonth() + 1) + '-' + donationDate.getDate() );
+				$('input#donation-date', page ).val(DD.dateToInput(new Date(donation.DonationDate)));
 			}
 
 			// ADD BACK HANDLER

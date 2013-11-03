@@ -4,52 +4,84 @@ $( window ).on( "pagechange", function (event, data) {
 
     if (data.options.target === "/view/contact.html") {
 
-        var contact = data.options.entity,
-            person = data.options.relatedEntity,
-            contactScheduleDate = $("#contact-schedule-date"),
-            contactCompleteDate = $("#contact-complete-date"),
-            contactFundraiser = $("#contact-fundraiser"),
-            contactChannel = $("#contact-channel"),
-            contactOutcome = $("#contact-outcome"),
-            contactNotes = $("#contact-notes");
+        DD.promises.lov.done(function() {
 
-        if (contact.ContactID) {
+            var contact = data.options.entity,
+                person = data.options.relatedEntity,
+                scheduleDate,
+                completeDate,
+                contactScheduleDate = $("#contact-schedule-date"),
+                contactCompleteDate = $("#contact-complete-date"),
+                contactFundraiser = $("#contact-fundraiser"),
+                contactChannel = $("#contact-channel"),
+                contactOutcome = $("#contact-outcome"),
+                contactNotes = $("#contact-notes"),
+                name = ( !!person.Title ? person.Title + ' ' : '' ) +
+                    ( !!person.FirstName ? person.FirstName + ' ' : '' ) +
+                    ( !!person.LastName ? person.LastName + ' ' : '' ) +
+                    ( !!person.Suffix ? person.Suffix + ' ' : '' ) +
+                    ( !!person.OrgName ? '( ' + person.OrgName + ' )' : '' );
 
-            if (contact.CompleteDate) {
-                contactCompleteDate.val([
-                    contact.CompleteDate.getFullYear(),
-                    contact.CompleteDate.getMonth() + 1,
-                    contact.CompleteDate.getDate()
-                ].join("-"));
+            $("#contact-person").html(name);
+
+            if (contact.ContactID) {
+
+                if (contact.CompleteDate) {
+
+                    contactCompleteDate.val(DD.dateToInput(new Date(contact.CompleteDate)));
+
+                }
+
+                if (contact.ScheduleDate) {
+
+                    contactScheduleDate.val(DD.dateToInput(new Date(contact.ScheduleDate)));
+
+                }
+
             }
 
-            if (contact.ScheduleDate) {
-                contactScheduleDate.val([
-                    contact.ScheduleDate.getFullYear(),
-                    contact.ScheduleDate.getMonth() + 1,
-                    contact.ScheduleDate.getDate()
-                ].join("-"));
-            }
+            contactNotes.val(contact.Notes || "");
+            //Contact Channels
+            $.each(DD.lov["Contact Channels"], function (i, opt) {
+                var option = "";
 
-        }
+                option += '<option value="' + opt.id + '"';
+                if (contact.Channel === opt.id) {
+                    option += "checked=checked";
+                }
+                option += '>' + opt.displayName;
+                option += '</option>';
+                $(option).appendTo(contactChannel);
+                contactChannel.selectmenu("refresh");
+            });
 
-        contactNotes.val(contact.Notes || "");
-        //Contact Channels
-        //Fundraisers
-        $.each(DD.lov["Contact Outcomes"], function (i, opt) {
-            var option = "";
+            //Fundraisers
+            $.each(DD.lov["Fundraisers"], function (i, opt) {
+                var option = "";
 
-            option += '<option value="' + opt.id + '"';
-            if (person.PersonType === opt.id) {
-                option += "checked=checked";
-            }
-            option += '>' + opt.displayName;
-            option += '</option>';
-            $(option).appendTo(personType);
-            personType.selectmenu("refresh");
+                option += '<option value="' + opt.id + '"';
+                if (contact.Fundraiser === opt.id) {
+                    option += "checked=checked";
+                }
+                option += '>' + opt.displayName;
+                option += '</option>';
+                $(option).appendTo(contactFundraiser);
+                contactFundraiser.selectmenu("refresh");
+            });
+
+            $.each(DD.lov["Contact Outcomes"], function (i, opt) {
+                var option = "";
+
+                option += '<option value="' + opt.id + '"';
+                if (contact.Outcome === opt.id) {
+                    option += "checked=checked";
+                }
+                option += '>' + opt.displayName;
+                option += '</option>';
+                $(option).appendTo(contactOutcome);
+                contactOutcome.selectmenu("refresh");
+            });
         });
-        personTitle.val(person.Title);
-
 
     }
 
