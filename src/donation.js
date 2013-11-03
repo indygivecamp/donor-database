@@ -13,29 +13,32 @@ $( window ).on( "pagechange", function (event, data) {
 				, selectValues = DD.lov['Donation Sources']
 			;
 
-			$( 'label#donation-donor', page ).html( person.Name );
+			$( 'label#donation-donor', page ).html(
+				person.Title + ' ' + person.FirstName + ' ' + person.LastName + ' ' + person.Suffix +
+				( !!person.OrgName ? '( ' + person.OrgName + ' )' : '' )
+			);
 			// SELECT (SOURCE) OPTIONS
 			var options = '';
 			$.each(selectValues, function(key, value) {   
-				options += '<option value="' + key + '">' + value + '</option>';
+				options += '<option value="' + value.id + '">' + value.displayName + '</option>';
 			});
 			$('select#donation-source', page ).html( options );
 			if( !!donation ) {
-				$('select#donation-source', page )
-					.val( donation.Source )
-					.selectmenu("refresh")
-				;
-
-				$('input#donation-amount', page ).html( donation.Amount );
-				$('input#donation-date', page ).html( donation.DonationDate );
+				$('select#donation-source', page ).val( donation.Source ).selectmenu("refresh");
+				$('input#donation-amount', page ).val( donation.Amount );
+				$('input#donation-date', page ).val( !!donation.DonationDate ? donation.DonationDate.split('T')[0] : '' );
 			}
 
+			// ADD BACK HANDLER
+			$( 'a[name="back"]', page ).off().on( 'click', function( e ) {
+				$.mobile.changePage( "/view/person.html", {entity: person});
+			});
 
 			// ADD SAVE HANDLER
 			$( 'a[name="save"]', page ).off().on( 'click', function( e ) {
 
 				var date = $('input#donation-date', page).val()
-					, amount = $('input#donation-date', page).val()
+					, amount = $('input#donation-amount', page).val()
 					, source = $( 'select#donation-source', page).val()
 				;
 
