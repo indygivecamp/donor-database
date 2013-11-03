@@ -30,8 +30,8 @@ DD.error = function () {
 
 }(jQuery));
 
-$.ajax({
-    beforeSend: function(){
+$.ajaxSetup({
+    beforeSend: function(request){
 
         $.publish("app/loading");
 
@@ -40,6 +40,10 @@ $.ajax({
 
         $.publish("app/loaded");
 
+    },
+    crossDomain: true,
+    xhrFields: {
+        'withCredentials': true
     }
 });
 
@@ -61,8 +65,8 @@ $.subscribe("dom/loaded", function () {
 
 $.subscribe("api/init", function () {
 
-    //var host = "http://lebanonboysgirlsclub.org.mytempweb.com/api/";
-    var host = "http://localhost:8000/src-test/";
+    var host = "http://lebanonboysgirlsclub.org.mytempweb.com/api/";
+    //var host = "http://localhost:8000/src-test/";
 
     var resources = [
         ["lov",         "LOV"       ],

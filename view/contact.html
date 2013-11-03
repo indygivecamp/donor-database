@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Donation</title>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+</head>
+<body>
+
+<div data-role="page" id="donation">
+    <div data-role="header" data-theme="b">
+        <a href="#" name="back" data-icon="arrow-l" data-theme="b">Back</a>
+        <h1>Contact</h1>
+        <a href="#" name="save" data-icon="check" data-theme="b">Save</a>
+    </div>
+
+    <div data-role="content">
+        <form>
+            <label name="contact-person" id="contact-person" value="" disabled readonly="readonly"></label>
+
+            <div data-role="fieldcontain">
+                <label for="contact-schedule-date">Schedule Date:</label>
+                <input type="date" data-clear-btn="true" name="contact-schedule-date" id="contact-schedule-date" value="">
+            </div>
+
+            <div data-role="fieldcontain">
+                <label for="contact-complete-date">Complete Date:</label>
+                <input type="date" data-clear-btn="true" name="contact-complete-date" id="contact-complete-date" value="">
+            </div>
+
+            <div data-role="fieldcontain">
+                <label for="contact-fundraiser">Fundraiser:</label>
+                <select name="contact-fundraiser" id="contact-fundraiser">
+                </select>
+            </div>
+
+            <div data-role="fieldcontain">
+                <label for="contact-channel">Channel:</label>
+                <select name="contact-channel" id="contact-channel">
+                </select>
+            </div>
+
+            <div data-role="fieldcontain">
+                <label for="contact-outcome">Outcome:</label>
+                <select name="contact-outcome" id="contact-outcome">
+                </select>
+            </div>
+
+            <div data-role="fieldcontain">
+                <label for="contact-notes">Notes:</label>
+                <textarea cols="40" rows="8" name="contact-notes" id="contact-notes"></textarea>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

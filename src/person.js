@@ -20,12 +20,29 @@ $( document).on("click", "#person-new-donation", function () {
 
 });
 
-$( document).on("click", "li.person-edit-donation", function (event) {
+$( document).on("click", "li.person-edit-donation", function () {
 
     var donation = DD.donation[this.dataset.uid],
         person = DD.person[this.id];
 
     $.publish("donation/load", [donation, person]);
+
+});
+
+$( document).on("click", "#person-new-contact", function () {
+
+    var person = DD.person[$(this).data("uid")];
+
+    $.publish("contact/load", [{}, person]);
+
+});
+
+$( document).on("click", "li.person-edit-contact", function () {
+
+    var donation = DD.contact[this.dataset.uid],
+        person = DD.person[this.id];
+
+    $.publish("contact/load", [donation, person]);
 
 });
 
@@ -114,7 +131,8 @@ $( window ).on( "pagechange", function (event, data) {
 
         $.each(person.Contacts || [], function (i, contact) {
 
-            var item = "";
+            var item = "",
+                parts = [];
 
             DD.contact = DD.contact || {};
 
@@ -128,7 +146,19 @@ $( window ).on( "pagechange", function (event, data) {
                 .replace(/(\S+)(.+)/, function (a,b) {
                     return b;
                 });
-            //TODO add more stuff?
+            if (contact.LOV_Channel) {
+                parts.push(contact.LOV_Channel.Name);
+            }
+            if (contact.LOV_Fundraiser) {
+                parts.push(contact.LOV_Fundraiser.Name);
+            }
+            if (contact.LOV_Outcome) {
+                parts.push(contact.LOV_Outcome.Name);
+            }
+            if (parts.length) {
+                item += ' - ';
+            }
+            item += parts.join(" - ");
             item += '</a></li>';
 
             $(item).appendTo(personContacts);
