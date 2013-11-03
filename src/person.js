@@ -124,15 +124,15 @@ $( window ).on( "pagechange", function (event, data) {
             item += person.PersonID;
             item += '" id="';
             item += contact.ContactID + '"><a href="#">';
-            item += new Date(contact.ScheduleDate).toISOString()
+            item += new Date(contact.ScheduleDate).toLocaleString()
                 .replace(/(\S+)(.+)/, function (a,b) {
                     return b;
                 });
             //TODO add more stuff?
             item += '</a></li>';
 
-            $(item).appendTo(personDonations);
-            personDonations.listview("refresh");
+            $(item).appendTo(personContacts);
+            personContacts.listview("refresh");
 
         });
 
@@ -148,7 +148,7 @@ $( window ).on( "pagechange", function (event, data) {
             item += person.PersonID;
             item += '" id="';
             item += donation.DonationID + '"><a href="#">';
-            item += new Date(donation.DonationDate).toISOString()
+            item += new Date(donation.DonationDate).toLocaleString()
                 .replace(/(\S+)(.+)/, function (a,b) {
                     return b;
                 });
