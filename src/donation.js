@@ -51,7 +51,7 @@ $( window ).on( "pagechange", function (event, data) {
 				}
 				// REQUIRED FIELDS PROVIDED, CONTINUE
 				donation.PersonID = person.PersonID;
-				donation.DonationDate = new Date( date ).toISOString()
+				donation.DonationDate = new Date( date ).toISOString();
 				donation.Amount = amount;
 				donation.Source = source;
 
@@ -59,6 +59,7 @@ $( window ).on( "pagechange", function (event, data) {
 					// NEW DONATION
 					$.post( DD.api.donation, donation ).done(
 						function( data ) {
+                            person.Donations.push(data);
 							$.mobile.changePage( "/view/person.html", {entity: person});
 						}
 					);
@@ -70,6 +71,14 @@ $( window ).on( "pagechange", function (event, data) {
 						, contentType: 'application/json'
 					}).done(
 						function( data ) {
+                            for(var i = 0; i < person.Donations.length; i++) {
+                                if(person.Donations[i].DonationID == donation.DonationID) {
+                                    person.Donations[i].DonationDate = donation.DonationDate;
+                                    person.Donations[i].Amount = donation.Amount;
+                                    person.Donations[i].Source = donation.Source;
+                                    break;
+                                }
+                            }
 							$.mobile.changePage( "/view/person.html", {entity: person});
 						}
 					);

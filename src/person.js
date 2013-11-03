@@ -22,8 +22,8 @@ $( document).on("click", "#person-new-donation", function () {
 
 $( document).on("click", "li.person-edit-donation", function () {
 
-    var donation = DD.donation[this.dataset.uid],
-        person = DD.person[this.id];
+    var donation = DD.donation[this.id],
+        person = DD.person[this.dataset.uid];
 
     $.publish("donation/load", [donation, person]);
 
