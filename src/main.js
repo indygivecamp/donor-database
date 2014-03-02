@@ -101,8 +101,7 @@ $.subscribe("dom/loaded", function () {
 
 $.subscribe("api/init", function () {
 
-    var host = "http://lebanonboysgirlsclub.org.mytempweb.com/api/";
-    //var host = "http://localhost:8000/src-test/";
+    var host = "/api/";
 
     var resources = [
         ["lov",         "LOV"       ],
