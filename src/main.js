@@ -159,17 +159,20 @@ $.subscribe("lov/update", function () {
 
             DD.admin_lov[name] = type.LOVs;
 
-            DD.lov[name] = type.LOVs.map(function (lov) {
+            DD.lov[name] = type.LOVs
 
-                if (lov.Active) {
+            .filter(function(lov) {
+            
+                return lov.Active;  
 
-                    return {
-                        displayName: lov.Name,
-                        id: lov.LOVID,
-                        ordinal: lov.DisplayOrder
-                    };
+            })
+            .map(function (lov) {
 
-                }
+                return {
+                    displayName: lov.Name,
+                    id: lov.LOVID,
+                    ordinal: lov.DisplayOrder
+                };
 
             });
 
